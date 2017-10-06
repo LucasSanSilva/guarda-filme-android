@@ -1,27 +1,22 @@
 package lucas.guardafilme
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Menu
+import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.SearchView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_search_movie.*
 import kotlinx.android.synthetic.main.item_movie.view.*
+import lucas.guardafilme.data.TempDataStore
 import lucas.guardafilme.model.Movie
-import android.support.v4.widget.SearchViewCompat.setOnQueryTextListener
-import android.support.v4.widget.SearchViewCompat.setQueryHint
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.view.MenuInflater
-import android.widget.SearchView
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.app.SearchManager
-import android.support.v7.widget.Toolbar
+import java.util.*
 
 
 /**
@@ -30,6 +25,19 @@ import android.support.v7.widget.Toolbar
 class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
 
     class MovieHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        fun handleClick(context: Context, movie: Movie, clickListener: (movie: Movie, watchedDate: Long) -> Unit) {
+            itemView.setOnClickListener {
+                val datePickerDialog = DatePickerDialog(context)
+                datePickerDialog.show()
+                datePickerDialog.setOnDateSetListener { datePicker, year, month, day ->
+                    val calendar = Calendar.getInstance()
+                    calendar.set(year, month, day)
+                    val watchedDate = calendar.timeInMillis
+                    clickListener(movie, watchedDate)
+                }
+            }
+        }
+
         fun setTitle(title: String) {
             itemView.title_text_view.text = title
         }
@@ -61,33 +69,18 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
                 MovieHolder::class.java,
                 databaseRef) {
             override fun populateViewHolder(holder: MovieHolder, movie: Movie, position: Int) {
+                holder.handleClick(this@SearchMovieActivity,
+                        movie,
+                        { movie, watchedDate ->
+                            TempDataStore.addWatchedMove(this@SearchMovieActivity, movie.uid, movie.title, watchedDate)
+                            this@SearchMovieActivity.finish()
+                        })
                 holder.setTitle(movie.title)
                 holder.setYear(movie.year)
             }
         }
         moviesRecyclerView.adapter = mAdapter
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        super.onCreateOptionsMenu(menu)
-//
-//        val inflater = menuInflater
-//        inflater.inflate(R.menu.menu_search, menu)
-//
-//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        val searchView = menu?.findItem(R.id.search_item)?.actionView as SearchView?
-//
-//        if (searchView != null) {
-//            searchView.setSearchableInfo(
-//                    searchManager.getSearchableInfo(componentName))
-//            searchView.queryHint = getString(R.string.action_search)
-//
-//            searchView.setOnQueryTextListener(this)
-//            searchView.setIconifiedByDefault(false)
-//        }
-//
-//        return true
-//    }
 
     override fun onDestroy() {
         super.onDestroy()

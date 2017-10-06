@@ -7,4 +7,6 @@
     <string name="unknown_sign_in_response">Resposta inesperada</string>
 
     <string name="action_search">Buscar</string>
+
+    <string name="title_watched_movies">Filmes Assistidos</string>
 </resources>

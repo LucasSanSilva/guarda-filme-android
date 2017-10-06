@@ -26,23 +26,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        startActivity(SearchMovieActivity.createIntent(this))
-        finish()
+//        startActivity(SearchMovieActivity.createIntent(this))
+//        finish()
 
-//        if (mAuth.currentUser != null) {
-//            // already signed in
-//        } else {
-//            // not signed in
-//            startActivityForResult(
-//                    AuthUI.getInstance()
-//                            .createSignInIntentBuilder()
-//                            .setAvailableProviders(
-//                                    Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-//                                            AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-//                                            AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-//                            .build(),
-//                    RC_SIGN_IN)
-//        }
+        if (mAuth.currentUser != null) {
+            // already signed in
+            startActivity(WelcomeActivity.createIntent(this, null))
+            finish()
+        } else {
+            // not signed in
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(
+                                    Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                            AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+                                            AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                            .build(),
+                    RC_SIGN_IN)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
