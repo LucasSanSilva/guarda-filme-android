@@ -21,8 +21,7 @@ import android.view.MenuInflater
 import android.widget.SearchView
 import android.support.v4.view.MenuItemCompat.getActionView
 import android.app.SearchManager
-
-
+import android.support.v7.widget.Toolbar
 
 
 /**
@@ -46,6 +45,11 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
 
+        val toolbar: Toolbar = toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+
         val moviesRecyclerView = movies_recycler_view
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -64,26 +68,26 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         moviesRecyclerView.adapter = mAdapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_search, menu)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.search_item)?.actionView as SearchView?
-
-        if (searchView != null) {
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(componentName))
-            searchView.queryHint = getString(R.string.action_search)
-
-            searchView.setOnQueryTextListener(this)
-            searchView.setIconifiedByDefault(false)
-        }
-
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        super.onCreateOptionsMenu(menu)
+//
+//        val inflater = menuInflater
+//        inflater.inflate(R.menu.menu_search, menu)
+//
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchView = menu?.findItem(R.id.search_item)?.actionView as SearchView?
+//
+//        if (searchView != null) {
+//            searchView.setSearchableInfo(
+//                    searchManager.getSearchableInfo(componentName))
+//            searchView.queryHint = getString(R.string.action_search)
+//
+//            searchView.setOnQueryTextListener(this)
+//            searchView.setIconifiedByDefault(false)
+//        }
+//
+//        return true
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

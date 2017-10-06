@@ -18,13 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".SearchMovieActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-        </activity>
+        <activity android:name=".SearchMovieActivity" android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>
