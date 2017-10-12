@@ -9,7 +9,7 @@ android {
     buildToolsVersion ANDROID_BUILD_VERSION
     defaultConfig {
         applicationId "lucas.guardafilme"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 26
         multiDexEnabled true
         versionCode 1
@@ -41,6 +41,10 @@ dependencies {
     implementation "com.android.support:design:$ANDROID_BUILD_VERSION"
     implementation "com.android.support:customtabs:$ANDROID_BUILD_VERSION"
     implementation "com.android.support:cardview-v7:$ANDROID_BUILD_VERSION"
+
+    implementation "org.jetbrains.anko:anko:0.10.1"
+
+    compile group: 'info.movito', name: 'themoviedbapi', version:'1.6'
 
     implementation 'com.android.support:multidex:1.0.2'
     testImplementation 'junit:junit:4.12'

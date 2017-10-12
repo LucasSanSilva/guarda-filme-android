@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".SearchMovieActivity" android:theme="@style/NoActionBar" />
+        <activity android:name=".SearchMovieActivity" />
     </application>
 
 </manifest>
