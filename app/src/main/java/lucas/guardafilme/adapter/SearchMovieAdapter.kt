@@ -4,14 +4,13 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.android.synthetic.main.item_movie.view.*
 import lucas.guardafilme.R
 import lucas.guardafilme.data.TempDataStore
+import lucas.guardafilme.model.Movie
 import java.util.*
 
 /**
@@ -19,7 +18,7 @@ import java.util.*
  */
 class SearchMovieAdapter(private val context: Context): RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder>() {
 
-    private var movies: List<MovieDb> = emptyList()
+    var movies: List<Movie> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchMovieViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
@@ -34,18 +33,18 @@ class SearchMovieAdapter(private val context: Context): RecyclerView.Adapter<Sea
         return movies.size
     }
 
-    fun setItems(movieItems: List<MovieDb>) {
+    fun setItems(movieItems: List<Movie>) {
         movies = movieItems
         notifyDataSetChanged()
     }
 
     class SearchMovieViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(movie: MovieDb, context: Context) {
-            if (movie.posterPath != null)
-                Log.d("Teste", movie.posterPath)
+        fun bindItem(movie: Movie, context: Context) {
+//            if (movie.posterPath != null)
+//                Log.d("Teste", movie.posterPath)
             itemView.title_text_view.text = movie.title
-            itemView.year_text_view.text = movie.releaseDate
+            itemView.year_text_view.text = movie.year
             val currentDate = Calendar.getInstance()
             itemView.setOnClickListener {
                 val datePickerDialog = DatePickerDialog(context, { _, year, month, day ->

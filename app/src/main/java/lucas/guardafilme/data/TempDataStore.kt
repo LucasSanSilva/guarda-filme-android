@@ -10,7 +10,7 @@ import lucas.guardafilme.model.WatchedMovie
  */
 class TempDataStore {
     companion object {
-        val WATCHED_MOVIES_REF = "watched_movies"
+        private val WATCHED_MOVIES_REF = "watched_movies"
 
         fun addWatchedMove(context: Context, movieId: Int, movieTitle: String, watchedDate: Long) {
             val currentUser = FirebaseAuth.getInstance().currentUser
