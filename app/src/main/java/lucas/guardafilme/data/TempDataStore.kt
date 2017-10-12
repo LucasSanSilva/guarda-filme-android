@@ -3,6 +3,7 @@ package lucas.guardafilme.data
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import lucas.guardafilme.model.Movie
 import lucas.guardafilme.model.WatchedMovie
 
 /**
@@ -12,7 +13,7 @@ class TempDataStore {
     companion object {
         private val WATCHED_MOVIES_REF = "watched_movies"
 
-        fun addWatchedMove(context: Context, movieId: Int, movieTitle: String, watchedDate: Long) {
+        fun addWatchedMove(context: Context, movie: Movie, watchedDate: Long) {
             val currentUser = FirebaseAuth.getInstance().currentUser
 
             if (currentUser != null) {
@@ -23,7 +24,14 @@ class TempDataStore {
                         .child(currentUser.uid)
                         .push()
 
-                val watchedMovie = WatchedMovie(watchedRef.key, movieId, movieTitle, watchedDate)
+                val watchedMovie = WatchedMovie(
+                        watchedRef.key,
+                        movie.id,
+                        movie.title,
+                        movie.originalTitle,
+                        watchedDate,
+                        movie.poster
+                )
                 watchedRef.setValue(watchedMovie)
             }
         }

@@ -41,8 +41,6 @@ class SearchMovieAdapter(private val context: Context): RecyclerView.Adapter<Sea
     class SearchMovieViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bindItem(movie: Movie, context: Context) {
-//            if (movie.posterPath != null)
-//                Log.d("Teste", movie.posterPath)
             itemView.title_text_view.text = movie.title
             itemView.year_text_view.text = movie.year
             val currentDate = Calendar.getInstance()
@@ -51,7 +49,7 @@ class SearchMovieAdapter(private val context: Context): RecyclerView.Adapter<Sea
                     val calendar = Calendar.getInstance()
                     calendar.set(year, month, day)
                     val watchedDate = calendar.timeInMillis
-                    TempDataStore.addWatchedMove(context, movie.id, movie.title, watchedDate)
+                    TempDataStore.addWatchedMove(context, movie, watchedDate)
                     (context as Activity).finish()
                 }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH))
                 datePickerDialog.show()

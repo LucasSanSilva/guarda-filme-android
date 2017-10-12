@@ -38,7 +38,7 @@ class WelcomeActivity: AppCompatActivity() {
         }
     }
 
-    lateinit var mAdapter: FirebaseRecyclerAdapter<WatchedMovie, WatchedMovieHolder>
+    private lateinit var mAdapter: FirebaseRecyclerAdapter<WatchedMovie, WatchedMovieHolder>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +55,19 @@ class WelcomeActivity: AppCompatActivity() {
                 startActivity(intent)
             }
 
+            val layoutManager = LinearLayoutManager(this)
+            layoutManager.reverseLayout = true
+            layoutManager.stackFromEnd = true
+
             val moviesRecyclerView = watched_movies_recycler_view
-            moviesRecyclerView.layoutManager = LinearLayoutManager(this)
+            moviesRecyclerView.layoutManager = layoutManager
 
             val databaseRef = FirebaseDatabase
                     .getInstance()
                     .reference
                     .child("watched_movies")
                     .child(currentUser.uid)
+                    .orderByChild("watchedDate")
 
             mAdapter = object : FirebaseRecyclerAdapter<WatchedMovie, WatchedMovieHolder>(
                     WatchedMovie::class.java,
@@ -70,7 +75,7 @@ class WelcomeActivity: AppCompatActivity() {
                     WatchedMovieHolder::class.java,
                     databaseRef) {
                 override fun populateViewHolder(holder: WatchedMovieHolder, watchedMovie: WatchedMovie, position: Int) {
-                    holder.setTitle(watchedMovie.movieName)
+                    holder.setTitle(watchedMovie.title)
                     holder.setWatchedDate(watchedMovie.watchedDate)
                 }
             }
