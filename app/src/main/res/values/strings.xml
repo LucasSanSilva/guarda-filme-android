@@ -9,6 +9,7 @@
     <!---->
 
     <string name="action_search">Buscar</string>
+    <string name="action_logout">Sair</string>
 
     <string name="title_watched_movies">Filmes Assistidos</string>
     <string name="title_search_movies">Procurar Filmes</string>
