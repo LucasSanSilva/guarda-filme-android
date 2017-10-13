@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Guarda Filme</string>
+    <string name="app_name">GuardaFilme</string>
 
     <!-- Login -->
     <string name="sign_in_cancelled">Login cancelado</string>
