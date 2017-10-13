@@ -33,8 +33,8 @@ class WelcomeActivity: AppCompatActivity() {
 
         fun setWatchedDate(date: Long) {
             val sdf = SimpleDateFormat("dd/MM/yyyy")
-            val formatedDate = sdf.format(Date(date))
-            itemView.watched_date_text_view.text = formatedDate
+            val formattedDate = sdf.format(Date(date))
+            itemView.watched_date_text_view.text = formattedDate
         }
     }
 

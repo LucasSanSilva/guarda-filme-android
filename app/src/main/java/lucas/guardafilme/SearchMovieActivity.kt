@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_search_movie.*
@@ -27,6 +28,9 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.title_search_movies)
 
         val moviesRecyclerView = movies_recycler_view
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -55,6 +59,14 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         outState.putParcelableArray(ARG_MOVIES, mAdapter.movies.toTypedArray())
 
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {

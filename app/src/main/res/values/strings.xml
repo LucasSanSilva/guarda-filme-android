@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Guarda Filme</string>
 
+    <!-- Login -->
     <string name="sign_in_cancelled">Login cancelado</string>
     <string name="no_internet_connection">Sem conexão</string>
     <string name="unknown_error">Erro inesperado</string>
     <string name="unknown_sign_in_response">Resposta inesperada</string>
+    <!---->
 
     <string name="action_search">Buscar</string>
 
     <string name="title_watched_movies">Filmes Assistidos</string>
+    <string name="title_search_movies">Procurar Filmes</string>
 </resources>
