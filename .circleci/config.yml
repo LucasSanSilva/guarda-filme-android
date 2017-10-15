@@ -9,8 +9,8 @@ jobs:
     steps:
       - checkout
       - run:
-	      name: Restora google-services.json
-	      command: echo $GOOGLE_SERVICES | base64 --decode > ~/$CIRCLE_PROJECT_REPONAME/app/google-services.json
+          name: Restora google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode > ~/$CIRCLE_PROJECT_REPONAME/app/google-services.json
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
