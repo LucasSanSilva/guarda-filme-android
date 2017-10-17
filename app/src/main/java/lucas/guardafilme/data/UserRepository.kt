@@ -22,7 +22,7 @@ class UserRepository {
                 .child("watched_movies")
                 .child(userId)
                 .orderByChild("watchedDate")
-        val valueListener = object : ValueEventListener {
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot?) {
                 // TODO
             }
@@ -30,8 +30,7 @@ class UserRepository {
             override fun onCancelled(error: DatabaseError?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-        }
-        databaseRef.addListenerForSingleValueEvent()
+        })
 
         return data
     }
