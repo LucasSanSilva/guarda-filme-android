@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 26
     buildToolsVersion ANDROID_BUILD_VERSION
@@ -29,20 +31,23 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation "com.android.support:appcompat-v7:$ANDROID_BUILD_VERSION"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'com.firebaseui:firebase-ui-auth:2.2.0'
     implementation 'com.firebaseui:firebase-ui-database:2.2.0'
-    implementation "com.google.firebase:firebase-auth:11.0.4"
-    implementation 'com.google.firebase:firebase-database:11.0.4'
-    implementation "com.google.android.gms:play-services-auth:11.0.4"
+    implementation "com.google.firebase:firebase-auth:$PLAY_SERVICES_BUILD_VERSION"
+    implementation "com.google.firebase:firebase-database:$PLAY_SERVICES_BUILD_VERSION"
+    implementation "com.google.android.gms:play-services-auth:$PLAY_SERVICES_BUILD_VERSION"
 
     implementation "com.android.support:design:$ANDROID_BUILD_VERSION"
     implementation "com.android.support:customtabs:$ANDROID_BUILD_VERSION"
     implementation "com.android.support:cardview-v7:$ANDROID_BUILD_VERSION"
 
     implementation "org.jetbrains.anko:anko:0.10.1"
+
+    kapt 'com.google.dagger:dagger-compiler:2.5'
+    implementation 'com.google.dagger:dagger:2.5'
 
     compile group: 'info.movito', name: 'themoviedbapi', version:'1.6'
 

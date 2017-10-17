@@ -10,6 +10,7 @@ import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.ResultCodes
 import com.firebase.ui.auth.IdpResponse
+import lucas.guardafilme.ui.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
 

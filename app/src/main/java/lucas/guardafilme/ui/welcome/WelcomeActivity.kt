@@ -1,4 +1,4 @@
-package lucas.guardafilme
+package lucas.guardafilme.ui.welcome
 
 import android.content.Context
 import android.content.Intent
@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_welcome.*
 import kotlinx.android.synthetic.main.item_watched_movie.view.*
+import lucas.guardafilme.MainActivity
+import lucas.guardafilme.R
+import lucas.guardafilme.SearchMovieActivity
 import lucas.guardafilme.model.WatchedMovie
 import java.text.SimpleDateFormat
 import java.util.*
