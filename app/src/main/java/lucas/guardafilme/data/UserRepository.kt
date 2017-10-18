@@ -34,7 +34,7 @@ class UserRepository {
                     }
                 }
 
-                data.value = watchedMovies
+                data.postValue(watchedMovies)
             }
 
             override fun onCancelled(error: DatabaseError?) {

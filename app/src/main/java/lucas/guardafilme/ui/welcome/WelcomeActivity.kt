@@ -2,6 +2,7 @@ package lucas.guardafilme.ui.welcome
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -67,9 +68,11 @@ class WelcomeActivity: AppCompatActivity() {
         moviesRecyclerView.layoutManager = layoutManager
 
         mAdapter = WatchedMoviesAdapter()
-        viewModel.watchedMovies.observe(this, android.arch.lifecycle.Observer { watchedMovies ->
+        viewModel.watchedMovies.observe(this, Observer { watchedMovies ->
             mAdapter.setItems(watchedMovies)
         })
+
+        moviesRecyclerView.adapter = mAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
