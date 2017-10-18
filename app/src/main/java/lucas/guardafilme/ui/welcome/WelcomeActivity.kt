@@ -1,5 +1,7 @@
 package lucas.guardafilme.ui.welcome
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,65 +30,46 @@ import java.util.*
  */
 class WelcomeActivity: AppCompatActivity() {
 
-    class WatchedMovieHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun handleClick(movie: WatchedMovie) {
-            itemView.setOnClickListener {  }
-        }
+    companion object {
+        val USER_ID_EXTRA = "USER_ID_EXTRA"
 
-        fun setTitle(title: String) {
-            itemView.title_text_view.text = title
-        }
-
-        fun setWatchedDate(date: Long) {
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            val formattedDate = sdf.format(Date(date))
-            itemView.watched_date_text_view.text = formattedDate
+        fun createIntent(context: Context, userId: String): Intent {
+            val intent = Intent(context, WelcomeActivity::class.java)
+            intent.putExtra(USER_ID_EXTRA, userId)
+            return intent
         }
     }
 
-    private lateinit var mAdapter: FirebaseRecyclerAdapter<WatchedMovie, WatchedMovieHolder>
+    private lateinit var mAdapter: WatchedMoviesAdapter
+    private lateinit var viewModel: WelcomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
+        val userId = intent.getStringExtra(USER_ID_EXTRA)
+
         supportActionBar?.title = getString(R.string.title_watched_movies)
+        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
+        viewModel.init(userId)
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-
-        if (currentUser != null) {
-            val fabButton = fab
-            fabButton.setOnClickListener {
-                val intent = SearchMovieActivity.createIntent(this)
-                startActivity(intent)
-            }
-
-            val layoutManager = LinearLayoutManager(this)
-            layoutManager.reverseLayout = true
-            layoutManager.stackFromEnd = true
-
-            val moviesRecyclerView = watched_movies_recycler_view
-            moviesRecyclerView.layoutManager = layoutManager
-
-            val databaseRef = FirebaseDatabase
-                    .getInstance()
-                    .reference
-                    .child("watched_movies")
-                    .child(currentUser.uid)
-                    .orderByChild("watchedDate")
-
-            mAdapter = object : FirebaseRecyclerAdapter<WatchedMovie, WatchedMovieHolder>(
-                    WatchedMovie::class.java,
-                    R.layout.item_watched_movie,
-                    WatchedMovieHolder::class.java,
-                    databaseRef) {
-                override fun populateViewHolder(holder: WatchedMovieHolder, watchedMovie: WatchedMovie, position: Int) {
-                    holder.setTitle(watchedMovie.title)
-                    holder.setWatchedDate(watchedMovie.watchedDate)
-                }
-            }
-            moviesRecyclerView.adapter = mAdapter
+        val fabButton = fab
+        fabButton.setOnClickListener {
+            val intent = SearchMovieActivity.createIntent(this)
+            startActivity(intent)
         }
+
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+
+        val moviesRecyclerView = watched_movies_recycler_view
+        moviesRecyclerView.layoutManager = layoutManager
+
+        mAdapter = WatchedMoviesAdapter()
+        viewModel.watchedMovies.observe(this, android.arch.lifecycle.Observer { watchedMovies ->
+            mAdapter.setItems(watchedMovies)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,13 +89,6 @@ class WelcomeActivity: AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    companion object {
-        fun createIntent(context: Context, response: IdpResponse?): Intent {
-            val intent = Intent(context, WelcomeActivity::class.java)
-            return intent
-        }
     }
 
 }

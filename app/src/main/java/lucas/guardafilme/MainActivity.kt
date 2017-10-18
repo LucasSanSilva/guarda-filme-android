@@ -30,9 +30,11 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(SearchMovieActivity.createIntent(this))
 //        finish()
 
-        if (mAuth.currentUser != null) {
+        val currentUser = mAuth.currentUser
+
+        if (currentUser != null) {
             // already signed in
-            startActivity(WelcomeActivity.createIntent(this, null))
+            startActivity(WelcomeActivity.createIntent(this, currentUser.uid))
             finish()
         } else {
             // not signed in
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
-                startActivity(WelcomeActivity.createIntent(this, response))
+                startActivity(WelcomeActivity.createIntent(this, ""))
                 finish()
                 return
             } else {

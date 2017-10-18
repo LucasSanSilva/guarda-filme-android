@@ -15,6 +15,7 @@ import lucas.guardafilme.model.WatchedMovie
 class UserRepository {
     fun getWatchedMovies(userId: String): LiveData<List<WatchedMovie>> {
         val data: MutableLiveData<List<WatchedMovie>> = MutableLiveData()
+        data.value
 
         val databaseRef = FirebaseDatabase
                 .getInstance()
@@ -24,7 +25,16 @@ class UserRepository {
                 .orderByChild("watchedDate")
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot?) {
-                // TODO
+                val watchedMovies = mutableListOf<WatchedMovie>()
+
+                dataSnapshot?.children?.forEach { childData ->
+                    val watchedMovie = childData.getValue(WatchedMovie::class.java)
+                    if (watchedMovie != null) {
+                        watchedMovies.add(watchedMovie)
+                    }
+                }
+
+                data.value = watchedMovies
             }
 
             override fun onCancelled(error: DatabaseError?) {
