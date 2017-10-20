@@ -8,11 +8,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import lucas.guardafilme.model.WatchedMovie
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by lucassantos on 17/10/17.
  */
-class UserRepository {
+class UserRepository @Inject constructor() {
     fun getWatchedMovies(userId: String): LiveData<List<WatchedMovie>> {
         val data: MutableLiveData<List<WatchedMovie>> = MutableLiveData()
         data.value

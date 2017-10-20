@@ -1,16 +1,16 @@
 package lucas.guardafilme
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import android.support.v7.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
-import java.util.*
 import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.ResultCodes
 import com.firebase.ui.auth.IdpResponse
+import com.firebase.ui.auth.ResultCodes
+import com.google.firebase.auth.FirebaseAuth
 import lucas.guardafilme.ui.welcome.WelcomeActivity
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

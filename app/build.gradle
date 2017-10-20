@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 26
     buildToolsVersion ANDROID_BUILD_VERSION
@@ -51,9 +53,16 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.0.0-beta2"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-beta2"
 
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+
     implementation "org.jetbrains.anko:anko:0.10.1"
 
     compile group: 'info.movito', name: 'themoviedbapi', version:'1.6'
+
+
 
     implementation 'com.android.support:multidex:1.0.2'
     testImplementation 'junit:junit:4.12'
