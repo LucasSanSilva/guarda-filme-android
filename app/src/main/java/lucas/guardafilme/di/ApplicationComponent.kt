@@ -8,13 +8,17 @@ import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import lucas.guardafilme.GuardaFilmeApplication
 import lucas.guardafilme.data.UserRepository
+import lucas.guardafilme.ui.welcome.WelcomeActivityModule
 import javax.inject.Singleton
 
 /**
  * Created by lucassantos on 19/10/17.
  */
 @Singleton
-@Component(modules = arrayOf(ApplicationModule::class, AndroidSupportInjectionModule::class))
+@Component(modules = arrayOf(
+        WelcomeActivityModule::class,
+        ApplicationModule::class,
+        AndroidSupportInjectionModule::class))
 interface ApplicationComponent: AndroidInjector<DaggerApplication> {
 
     fun inject(application: GuardaFilmeApplication)

@@ -17,13 +17,13 @@ class WelcomeActivityTest {
 
     @Test
     fun clickAdd_shouldStartSearchMovieActivity() {
-//        val intent = Intent()
-//        intent.putExtra(WelcomeActivity.USER_ID_EXTRA, "teste")
-//        val activity: WelcomeActivity = Robolectric
-//                .buildActivity(WelcomeActivity::class.java, intent)
-//                .create()
-//                .get()
-//        activity.findViewById<FloatingActionButton>(R.id.fab).performClick()
+        val intent = Intent()
+        intent.putExtra(WelcomeActivity.USER_ID_EXTRA, "teste")
+        val activity: WelcomeActivity = Robolectric
+                .buildActivity(WelcomeActivity::class.java, intent)
+                .create()
+                .get()
+        activity.findViewById<FloatingActionButton>(R.id.fab).performClick()
     }
 
 }

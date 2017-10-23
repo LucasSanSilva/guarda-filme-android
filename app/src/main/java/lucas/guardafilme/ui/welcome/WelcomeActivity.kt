@@ -1,36 +1,25 @@
 package lucas.guardafilme.ui.welcome
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
-import kotlinx.android.synthetic.main.item_watched_movie.view.*
 import lucas.guardafilme.MainActivity
 import lucas.guardafilme.R
-import lucas.guardafilme.SearchMovieActivity
-import lucas.guardafilme.model.WatchedMovie
-import java.text.SimpleDateFormat
-import java.util.*
+import lucas.guardafilme.data.AuthProvider
+import lucas.guardafilme.ui.searchmovie.SearchMovieActivity
+import javax.inject.Inject
 
 /**
  * Created by lucassantos on 05/08/17.
  */
-class WelcomeActivity: AppCompatActivity() {
-
+class WelcomeActivity: DaggerAppCompatActivity() {
     companion object {
         val USER_ID_EXTRA = "USER_ID_EXTRA"
 
@@ -44,35 +33,36 @@ class WelcomeActivity: AppCompatActivity() {
     private lateinit var mAdapter: WatchedMoviesAdapter
     private lateinit var viewModel: WelcomeViewModel
 
+    @Inject
+    lateinit var authProvider: AuthProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Setup view
         setContentView(R.layout.activity_welcome)
-
-        val userId = intent.getStringExtra(USER_ID_EXTRA)
-
         supportActionBar?.title = getString(R.string.title_watched_movies)
-        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
-        viewModel.init(userId)
-
-        val fabButton = fab
-        fabButton.setOnClickListener {
+        fab.setOnClickListener {
             val intent = SearchMovieActivity.createIntent(this)
             startActivity(intent)
         }
 
+        // Setup RecyclerView
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true
-
         val moviesRecyclerView = watched_movies_recycler_view
         moviesRecyclerView.layoutManager = layoutManager
-
         mAdapter = WatchedMoviesAdapter()
+        moviesRecyclerView.adapter = mAdapter
+
+        // Setup ViewModel
+        val userId = intent.getStringExtra(USER_ID_EXTRA)
+        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
+        viewModel.init(userId)
         viewModel.watchedMovies.observe(this, Observer { watchedMovies ->
             mAdapter.setItems(watchedMovies)
         })
-
-        moviesRecyclerView.adapter = mAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -83,15 +73,12 @@ class WelcomeActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout_item) {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnCompleteListener { task ->
-                        startActivity(Intent(this, MainActivity::class.java))
-                    }
-            finish()
+            authProvider.logoutUser(this, {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            })
         }
 
         return super.onOptionsItemSelected(item)
     }
-
 }

@@ -2,14 +2,12 @@ package lucas.guardafilme.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import lucas.guardafilme.model.WatchedMovie
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by lucassantos on 17/10/17.

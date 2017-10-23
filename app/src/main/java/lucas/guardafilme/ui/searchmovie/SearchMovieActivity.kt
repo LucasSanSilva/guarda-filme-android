@@ -1,4 +1,4 @@
-package lucas.guardafilme
+package lucas.guardafilme.ui.searchmovie
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_search_movie.*
+import lucas.guardafilme.R
 import lucas.guardafilme.adapter.SearchMovieAdapter
 import lucas.guardafilme.data.MoviesProvider
 import lucas.guardafilme.model.Movie

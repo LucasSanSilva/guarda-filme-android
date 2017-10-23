@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.welcome.WelcomeActivity" />
-        <activity android:name=".SearchMovieActivity" />
+        <activity android:name=".ui.searchmovie.SearchMovieActivity" />
     </application>
 
 </manifest>
