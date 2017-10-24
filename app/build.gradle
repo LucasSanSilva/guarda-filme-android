@@ -63,15 +63,20 @@ dependencies {
 
     compile group: 'info.movito', name: 'themoviedbapi', version:'1.6'
 
-
-
     implementation 'com.android.support:multidex:1.0.2'
+
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.11.0"
     testImplementation "org.robolectric:robolectric:3.4.2"
     testImplementation "org.robolectric:multidex:3.4.2"
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+}
+
+android.applicationVariants.all {
+    def aptOutputDir = new File(buildDir, "generated/source/kapt/${it.unitTestVariant.dirName}")
+    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
 }
 
 apply plugin: 'com.google.gms.google-services'
