@@ -4,18 +4,18 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import lucas.guardafilme.data.AuthProvider
-import lucas.guardafilme.data.GFAuthProvider
 import lucas.guardafilme.di.ActivityScoped
+import org.mockito.Mockito
 
 /**
- * Created by lucassantos on 21/10/17.
+ * Created by lucassantos on 24/10/17.
  */
 @Module
-class WelcomeActivityModule {
+class TestWelcomeActivityModule {
 
     @ActivityScoped
     @Provides
-    fun provideAuthProvider(): AuthProvider {
-        return GFAuthProvider()
+    fun authProvider(): AuthProvider {
+        return Mockito.mock(AuthProvider::class.java)
     }
 }

@@ -7,22 +7,21 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
-import lucas.guardafilme.GuardaFilmeApplication
-import lucas.guardafilme.data.UserRepository
-import lucas.guardafilme.ui.welcome.WelcomeActivityModule
+import lucas.guardafilme.TestGuardaFilmeApplication
+import lucas.guardafilme.ui.welcome.TestWelcomeActivityModule
 import javax.inject.Singleton
 
 /**
- * Created by lucassantos on 19/10/17.
+ * Created by lucassantos on 24/10/17.
  */
 @Singleton
 @Component(modules = arrayOf(
-        ApplicationModule::class,
+        TestApplicationModule::class,
         AndroidInjectionModule::class,
-        ActivityBindingModule::class))
-interface ApplicationComponent {
+        TestActivityBindingModule::class))
+interface TestApplicationComponent {
 
-    fun inject(application: GuardaFilmeApplication)
+    fun inject(application: TestGuardaFilmeApplication)
 
 //    fun getUserRepository(): UserRepository
 
@@ -30,9 +29,9 @@ interface ApplicationComponent {
     interface Builder {
 
         @BindsInstance
-        fun application(application: Application): ApplicationComponent.Builder
+        fun application(application: Application): TestApplicationComponent.Builder
 
-        fun build(): ApplicationComponent
+        fun build(): TestApplicationComponent
 
     }
 

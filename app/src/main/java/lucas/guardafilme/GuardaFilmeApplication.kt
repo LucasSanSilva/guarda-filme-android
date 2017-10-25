@@ -1,26 +1,30 @@
 package lucas.guardafilme
 
-import android.support.annotation.VisibleForTesting
+import android.app.Activity
+import android.support.multidex.MultiDexApplication
 import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import lucas.guardafilme.data.UserRepository
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import lucas.guardafilme.di.DaggerApplicationComponent
 import javax.inject.Inject
+
 
 /**
  * Created by lucassantos on 19/10/17.
  */
-class GuardaFilmeApplication: DaggerApplication() {
-//    @VisibleForTesting
-//    @Inject
-//    lateinit var userRepository: UserRepository
+class GuardaFilmeApplication: MultiDexApplication(), HasActivityInjector {
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        val appComponent = DaggerApplicationComponent.builder()
+    override fun onCreate() {
+        super.onCreate()
+        DaggerApplicationComponent.builder()
                 .application(this)
                 .build()
-        appComponent.inject(this)
-        return appComponent
+                .inject(this)
     }
 
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return dispatchingActivityInjector
+    }
 }

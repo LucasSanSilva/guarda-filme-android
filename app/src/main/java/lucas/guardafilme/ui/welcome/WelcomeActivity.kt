@@ -5,9 +5,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import lucas.guardafilme.MainActivity
@@ -19,7 +21,7 @@ import javax.inject.Inject
 /**
  * Created by lucassantos on 05/08/17.
  */
-class WelcomeActivity: DaggerAppCompatActivity() {
+class WelcomeActivity: AppCompatActivity() {
     companion object {
         val USER_ID_EXTRA = "USER_ID_EXTRA"
 
@@ -37,6 +39,7 @@ class WelcomeActivity: DaggerAppCompatActivity() {
     lateinit var authProvider: AuthProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         // Setup view

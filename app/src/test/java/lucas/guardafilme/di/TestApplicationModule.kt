@@ -2,16 +2,15 @@ package lucas.guardafilme.di
 
 import android.app.Application
 import android.content.Context
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 /**
- * Created by lucassantos on 19/10/17.
+ * Created by lucassantos on 25/10/17.
  */
 @Module
-class ApplicationModule {
+class TestApplicationModule {
 
     @Provides
     @Singleton
