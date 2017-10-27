@@ -3,7 +3,6 @@ package lucas.guardafilme.ui.welcome
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import lucas.guardafilme.data.AuthRepository
 import lucas.guardafilme.data.UserRepository
 import lucas.guardafilme.di.DaggerViewModelComponent
 import lucas.guardafilme.model.WatchedMovie
@@ -34,13 +33,13 @@ class WelcomeViewModel: ViewModel() {
     fun getWatchedMovies(): LiveData<List<WatchedMovie>> {
         if (watchedMovies == null) {
             watchedMovies = MutableLiveData()
-            updateWatchedMovies()
+            loadWatchedMovies()
         }
 
         return watchedMovies as LiveData<List<WatchedMovie>>
     }
 
-    fun updateWatchedMovies() {
+    fun loadWatchedMovies() {
         userRepository.getWatchedMovies(userId, { loadedWatchedMovies ->
             watchedMovies?.postValue(loadedWatchedMovies)
         })
@@ -49,7 +48,16 @@ class WelcomeViewModel: ViewModel() {
     fun removeWatchedMovie(watchedMovie: WatchedMovie) {
         userRepository.removeWatchedMovie(userId, watchedMovie.uid, { success ->
             if (success) {
-                updateWatchedMovies()
+                loadWatchedMovies()
+            }
+        })
+    }
+
+    fun updateWatchedMovie(watchedMovie: WatchedMovie, updatedDate: Long) {
+        val updatedWatchedMovie = watchedMovie.copy(watchedDate = updatedDate)
+        userRepository.updateWatchedMovie(userId, updatedWatchedMovie, { success ->
+            if (success) {
+                loadWatchedMovies()
             }
         })
     }

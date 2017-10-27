@@ -16,6 +16,7 @@ import lucas.guardafilme.MainActivity
 import lucas.guardafilme.R
 import lucas.guardafilme.data.AuthProvider
 import lucas.guardafilme.model.WatchedMovie
+import lucas.guardafilme.ui.UiUtils
 import lucas.guardafilme.ui.searchmovie.SearchMovieActivity
 import javax.inject.Inject
 
@@ -59,7 +60,7 @@ class WelcomeActivity: AppCompatActivity() {
         moviesRecyclerView.layoutManager = layoutManager
         mAdapter = WatchedMoviesAdapter(this, object : WatchedMoviesAdapter.WatchedMovieCallback {
             override fun editClicked(watchedMovie: WatchedMovie) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                editWatchedMovie(watchedMovie)
             }
 
             override fun removeClicked(watchedMovie: WatchedMovie) {
@@ -91,5 +92,11 @@ class WelcomeActivity: AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun editWatchedMovie(watchedMovie: WatchedMovie) {
+        UiUtils.showDatePickerDialog(this, { date ->
+            viewModel.updateWatchedMovie(watchedMovie, date)
+        })
     }
 }

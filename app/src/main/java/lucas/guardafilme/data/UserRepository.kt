@@ -49,7 +49,11 @@ class UserRepository @Inject constructor() {
         })
     }
 
-    fun removeWatchedMovie(userId: String, watchedMovieId: String, onComplete: (success: Boolean) -> Unit) {
+    fun removeWatchedMovie(
+            userId: String,
+            watchedMovieId: String,
+            onComplete: (success: Boolean) -> Unit
+    ) {
         val watchedMovieRef = FirebaseDatabase
                 .getInstance()
                 .reference
@@ -57,6 +61,22 @@ class UserRepository @Inject constructor() {
                 .child(userId)
                 .child(watchedMovieId)
         watchedMovieRef.setValue(null).addOnCompleteListener { task ->
+            onComplete(task.isSuccessful)
+        }
+    }
+
+    fun updateWatchedMovie(
+            userId: String,
+            watchedMovie: WatchedMovie,
+            onComplete: (success: Boolean) -> Unit
+    ) {
+        val watchedMovieRef = FirebaseDatabase
+                .getInstance()
+                .reference
+                .child("watched_movies")
+                .child(userId)
+                .child(watchedMovie.uid)
+        watchedMovieRef.setValue(watchedMovie).addOnCompleteListener { task ->
             onComplete(task.isSuccessful)
         }
     }
