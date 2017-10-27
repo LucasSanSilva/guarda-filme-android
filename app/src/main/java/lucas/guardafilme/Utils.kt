@@ -5,7 +5,6 @@ package lucas.guardafilme
  */
 class Utils {
     companion object {
-
         /**
          * Retorna o ano dado uma data no formato yyyy-MM-dd
          */

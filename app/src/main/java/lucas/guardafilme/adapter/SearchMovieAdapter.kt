@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 import lucas.guardafilme.R
 import lucas.guardafilme.data.TempDataStore
 import lucas.guardafilme.model.Movie
+import lucas.guardafilme.ui.UiUtils
 import java.util.*
 
 /**
@@ -43,16 +44,12 @@ class SearchMovieAdapter(private val context: Context): RecyclerView.Adapter<Sea
         fun bindItem(movie: Movie, context: Context) {
             itemView.title_text_view.text = movie.title
             itemView.year_text_view.text = movie.year
-            val currentDate = Calendar.getInstance()
+
             itemView.setOnClickListener {
-                val datePickerDialog = DatePickerDialog(context, { _, year, month, day ->
-                    val calendar = Calendar.getInstance()
-                    calendar.set(year, month, day)
-                    val watchedDate = calendar.timeInMillis
+                UiUtils.showDatePickerDialog(context, { watchedDate ->
                     TempDataStore.addWatchedMove(context, movie, watchedDate)
                     (context as Activity).finish()
-                }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH))
-                datePickerDialog.show()
+                })
             }
         }
 
