@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 import lucas.guardafilme.MainActivity
 import lucas.guardafilme.R
 import lucas.guardafilme.data.AuthProvider
+import lucas.guardafilme.model.WatchedMovie
 import lucas.guardafilme.ui.searchmovie.SearchMovieActivity
 import javax.inject.Inject
 
@@ -56,14 +57,21 @@ class WelcomeActivity: AppCompatActivity() {
         layoutManager.stackFromEnd = true
         val moviesRecyclerView = watched_movies_recycler_view
         moviesRecyclerView.layoutManager = layoutManager
-        mAdapter = WatchedMoviesAdapter()
+        mAdapter = WatchedMoviesAdapter(this, object : WatchedMoviesAdapter.WatchedMovieCallback {
+            override fun editClicked(watchedMovie: WatchedMovie) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun removeClicked(watchedMovie: WatchedMovie) {
+                viewModel.removeWatchedMovie(watchedMovie)
+            }
+        })
         moviesRecyclerView.adapter = mAdapter
 
         // Setup ViewModel
         val userId = intent.getStringExtra(USER_ID_EXTRA)
         viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
-        viewModel.init(userId)
-        viewModel.watchedMovies.observe(this, Observer { watchedMovies ->
+        viewModel.getWatchedMovies().observe(this, Observer { watchedMovies ->
             mAdapter.setItems(watchedMovies)
         })
     }

@@ -1,6 +1,7 @@
 package lucas.guardafilme.ui.welcome
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import lucas.guardafilme.data.AuthRepository
 import lucas.guardafilme.data.UserRepository
@@ -18,20 +19,38 @@ class WelcomeViewModel: ViewModel() {
     @Inject
     lateinit var userRepository: UserRepository
 
-    var userId: String? = null
-    lateinit var watchedMovies: LiveData<List<WatchedMovie>>
+    val userId: String
+    private var watchedMovies: MutableLiveData<List<WatchedMovie>>? = null
 
     init {
         DaggerViewModelComponent
                 .builder()
                 .build()
                 .inject(this)
+
+        userId = userRepository.getUserId()
     }
 
-    fun init(userId: String) {
-        if (this.userId == null) {
-            this.userId = userId
-            watchedMovies = userRepository.getWatchedMovies(userId)
+    fun getWatchedMovies(): LiveData<List<WatchedMovie>> {
+        if (watchedMovies == null) {
+            watchedMovies = MutableLiveData()
+            updateWatchedMovies()
         }
+
+        return watchedMovies as LiveData<List<WatchedMovie>>
+    }
+
+    fun updateWatchedMovies() {
+        userRepository.getWatchedMovies(userId, { loadedWatchedMovies ->
+            watchedMovies?.postValue(loadedWatchedMovies)
+        })
+    }
+
+    fun removeWatchedMovie(watchedMovie: WatchedMovie) {
+        userRepository.removeWatchedMovie(userId, watchedMovie.uid, { success ->
+            if (success) {
+                updateWatchedMovies()
+            }
+        })
     }
 }

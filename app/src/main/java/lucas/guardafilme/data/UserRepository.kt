@@ -2,6 +2,7 @@ package lucas.guardafilme.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -13,10 +14,15 @@ import javax.inject.Inject
  * Created by lucassantos on 17/10/17.
  */
 class UserRepository @Inject constructor() {
-    fun getWatchedMovies(userId: String): LiveData<List<WatchedMovie>> {
-        val data: MutableLiveData<List<WatchedMovie>> = MutableLiveData()
-        data.value
+    fun getUserId(): String {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            return currentUser.uid
+        }
+        return ""
+    }
 
+    fun getWatchedMovies(userId: String, listener: (List<WatchedMovie>) -> Unit) {
         val databaseRef = FirebaseDatabase
                 .getInstance()
                 .reference
@@ -34,14 +40,24 @@ class UserRepository @Inject constructor() {
                     }
                 }
 
-                data.postValue(watchedMovies)
+                listener(watchedMovies)
             }
 
             override fun onCancelled(error: DatabaseError?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
+    }
 
-        return data
+    fun removeWatchedMovie(userId: String, watchedMovieId: String, onComplete: (success: Boolean) -> Unit) {
+        val watchedMovieRef = FirebaseDatabase
+                .getInstance()
+                .reference
+                .child("watched_movies")
+                .child(userId)
+                .child(watchedMovieId)
+        watchedMovieRef.setValue(null).addOnCompleteListener { task ->
+            onComplete(task.isSuccessful)
+        }
     }
 }
