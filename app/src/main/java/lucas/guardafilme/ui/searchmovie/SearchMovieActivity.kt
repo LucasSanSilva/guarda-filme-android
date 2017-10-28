@@ -50,8 +50,12 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        mSearchView = menu.findItem(R.id.search_item).actionView as SearchView
+        val searchItem = menu.findItem(R.id.search_item)
+
+        mSearchView = searchItem.actionView as SearchView
         mSearchView.setOnQueryTextListener(this)
+        mSearchView.setIconifiedByDefault(false)
+        mSearchView.requestFocus()
 
         return true
     }
