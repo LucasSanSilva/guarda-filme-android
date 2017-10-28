@@ -10,7 +10,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion ANDROID_BUILD_VERSION
     defaultConfig {
-        applicationId "lucas.guardafilme"
+        applicationId "com.guardafilme"
         minSdkVersion 21
         targetSdkVersion 26
         multiDexEnabled true
