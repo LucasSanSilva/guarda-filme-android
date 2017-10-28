@@ -1,5 +1,6 @@
 package lucas.guardafilme.ui.searchmovie
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_search_movie.*
 import lucas.guardafilme.R
 import lucas.guardafilme.adapter.SearchMovieAdapter
 import lucas.guardafilme.data.MoviesProvider
+import lucas.guardafilme.data.TempDataStore
 import lucas.guardafilme.model.Movie
 
 
@@ -20,6 +22,12 @@ import lucas.guardafilme.model.Movie
  * Created by lucassantos on 06/08/17.
  */
 class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, SearchMovieActivity::class.java)
+        }
+    }
 
     private val ARG_MOVIES = "ARG_MOVIES"
 
@@ -36,7 +44,11 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         val moviesRecyclerView = movies_recycler_view
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        mAdapter = SearchMovieAdapter(this)
+        mAdapter = SearchMovieAdapter(this, { movie, watchedDate ->
+            TempDataStore.addWatchedMove(movie, watchedDate)
+            setResult(Activity.RESULT_OK)
+            finish()
+        })
         moviesRecyclerView.adapter = mAdapter
 
         if (savedInstanceState != null) {
@@ -89,11 +101,5 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String): Boolean {
         return false
-    }
-
-    companion object {
-        fun createIntent(context: Context): Intent {
-            return Intent(context, SearchMovieActivity::class.java)
-        }
     }
 }

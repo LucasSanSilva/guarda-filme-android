@@ -28,7 +28,7 @@ class WelcomeViewModel: ViewModel() {
         userId = userRepository.getUserId()
     }
 
-    private fun loadWatchedMovies() {
+    fun loadWatchedMovies() {
         userRepository.getWatchedMovies(userId, { loadedWatchedMovies ->
             watchedMovies?.postValue(loadedWatchedMovies)
         })

@@ -1,5 +1,6 @@
 package lucas.guardafilme.ui.welcome
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class WelcomeActivity: BaseActivity() {
     companion object {
         val USER_ID_EXTRA = "USER_ID_EXTRA"
+        val ADD_MOVIE_REQUEST = 435
 
         fun createIntent(context: Context, userId: String): Intent {
             val intent = Intent(context, WelcomeActivity::class.java)
@@ -51,7 +53,7 @@ class WelcomeActivity: BaseActivity() {
         supportActionBar?.title = getString(R.string.title_watched_movies)
         fab.setOnClickListener {
             val intent = SearchMovieActivity.createIntent(this)
-            startActivity(intent)
+            startActivityForResult(intent, ADD_MOVIE_REQUEST)
         }
 
         showLoading()
@@ -97,6 +99,14 @@ class WelcomeActivity: BaseActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ADD_MOVIE_REQUEST && resultCode == Activity.RESULT_OK) {
+            viewModel.loadWatchedMovies()
+        }
     }
 
     override fun showLoading() {

@@ -13,7 +13,7 @@ class TempDataStore {
     companion object {
         private val WATCHED_MOVIES_REF = "watched_movies"
 
-        fun addWatchedMove(context: Context, movie: Movie, watchedDate: Long) {
+        fun addWatchedMove(movie: Movie, watchedDate: Long) {
             val currentUser = FirebaseAuth.getInstance().currentUser
 
             if (currentUser != null) {
