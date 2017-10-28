@@ -11,7 +11,8 @@ data class Movie(
         var title: String = "",
         var originalTitle: String = "",
         var year: String = "",
-        var poster: String = ""
+        var poster: String = "",
+        var backdrop: String = ""
 ): Parcelable {
     companion object {
         @JvmField @Suppress("unused")
@@ -31,6 +32,7 @@ data class Movie(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
+            parcel.readString(),
             parcel.readString()
     )
 
@@ -40,6 +42,7 @@ data class Movie(
         dest.writeString(originalTitle)
         dest.writeString(year)
         dest.writeString(poster)
+        dest.writeString(backdrop)
     }
 
     override fun describeContents() = 0

@@ -30,7 +30,8 @@ class TempDataStore {
                         movie.title,
                         movie.originalTitle,
                         watchedDate,
-                        movie.poster
+                        movie.poster,
+                        movie.backdrop
                 )
                 watchedRef.setValue(watchedMovie)
             }

@@ -33,6 +33,7 @@ class MoviesProvider {
             movie.originalTitle = tmdbMovie.originalTitle
             movie.year = Utils.getYearFromMovieReleaseDate(tmdbMovie.releaseDate)
             movie.poster = tmdbMovie.posterPath ?: ""
+            movie.backdrop = tmdbMovie.backdropPath ?: ""
 
             return movie
         }
