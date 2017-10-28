@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
@@ -16,6 +17,7 @@ import lucas.guardafilme.MainActivity
 import lucas.guardafilme.R
 import lucas.guardafilme.data.AuthProvider
 import lucas.guardafilme.model.WatchedMovie
+import lucas.guardafilme.ui.BaseActivity
 import lucas.guardafilme.ui.UiUtils
 import lucas.guardafilme.ui.searchmovie.SearchMovieActivity
 import javax.inject.Inject
@@ -23,7 +25,7 @@ import javax.inject.Inject
 /**
  * Created by lucassantos on 05/08/17.
  */
-class WelcomeActivity: AppCompatActivity() {
+class WelcomeActivity: BaseActivity() {
     companion object {
         val USER_ID_EXTRA = "USER_ID_EXTRA"
 
@@ -52,6 +54,8 @@ class WelcomeActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
+        showLoading()
+
         // Setup RecyclerView
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
@@ -74,6 +78,7 @@ class WelcomeActivity: AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
         viewModel.getWatchedMovies().observe(this, Observer { watchedMovies ->
             mAdapter.setItems(watchedMovies)
+            hideLoading()
         })
     }
 
@@ -92,6 +97,16 @@ class WelcomeActivity: AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun showLoading() {
+        main_layout.visibility = View.GONE
+        loading_view.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loading_view.visibility = View.GONE
+        main_layout.visibility = View.VISIBLE
     }
 
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {

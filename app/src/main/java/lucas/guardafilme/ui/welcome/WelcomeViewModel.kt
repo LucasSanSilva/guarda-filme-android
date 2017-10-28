@@ -12,8 +12,6 @@ import javax.inject.Inject
  * Created by lucassantos on 17/10/17.
  */
 class WelcomeViewModel: ViewModel() {
-//    @Inject
-//    lateinit var authRepository: AuthRepository
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -30,6 +28,12 @@ class WelcomeViewModel: ViewModel() {
         userId = userRepository.getUserId()
     }
 
+    private fun loadWatchedMovies() {
+        userRepository.getWatchedMovies(userId, { loadedWatchedMovies ->
+            watchedMovies?.postValue(loadedWatchedMovies)
+        })
+    }
+
     fun getWatchedMovies(): LiveData<List<WatchedMovie>> {
         if (watchedMovies == null) {
             watchedMovies = MutableLiveData()
@@ -37,12 +41,6 @@ class WelcomeViewModel: ViewModel() {
         }
 
         return watchedMovies as LiveData<List<WatchedMovie>>
-    }
-
-    fun loadWatchedMovies() {
-        userRepository.getWatchedMovies(userId, { loadedWatchedMovies ->
-            watchedMovies?.postValue(loadedWatchedMovies)
-        })
     }
 
     fun removeWatchedMovie(watchedMovie: WatchedMovie) {
