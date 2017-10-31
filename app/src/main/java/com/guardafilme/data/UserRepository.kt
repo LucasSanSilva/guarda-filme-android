@@ -22,12 +22,12 @@ class UserRepository @Inject constructor() {
         return ""
     }
 
-    fun getWatchedMovies(userId: String, listener: (List<WatchedMovie>) -> Unit) {
+    fun getWatchedMovies(listener: (List<WatchedMovie>) -> Unit) {
         val databaseRef = FirebaseDatabase
                 .getInstance()
                 .reference
                 .child("watched_movies")
-                .child(userId)
+                .child(getUserId())
                 .orderByChild("watchedDate")
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot?) {
@@ -50,7 +50,6 @@ class UserRepository @Inject constructor() {
     }
 
     fun removeWatchedMovie(
-            userId: String,
             watchedMovieId: String,
             onComplete: (success: Boolean) -> Unit
     ) {
@@ -58,7 +57,7 @@ class UserRepository @Inject constructor() {
                 .getInstance()
                 .reference
                 .child("watched_movies")
-                .child(userId)
+                .child(getUserId())
                 .child(watchedMovieId)
         watchedMovieRef.setValue(null).addOnCompleteListener { task ->
             onComplete(task.isSuccessful)
@@ -66,7 +65,6 @@ class UserRepository @Inject constructor() {
     }
 
     fun updateWatchedMovie(
-            userId: String,
             watchedMovie: WatchedMovie,
             onComplete: (success: Boolean) -> Unit
     ) {
@@ -74,7 +72,7 @@ class UserRepository @Inject constructor() {
                 .getInstance()
                 .reference
                 .child("watched_movies")
-                .child(userId)
+                .child(getUserId())
                 .child(watchedMovie.uid)
         watchedMovieRef.setValue(watchedMovie).addOnCompleteListener { task ->
             onComplete(task.isSuccessful)
