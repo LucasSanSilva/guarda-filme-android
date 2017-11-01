@@ -1,6 +1,7 @@
 package com.guardafilme.ui.welcome
 
 import com.guardafilme.data.UserRepository
+import com.guardafilme.model.WatchedMovie
 import javax.inject.Inject
 
 /**
@@ -25,14 +26,17 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
     }
 
     override fun addMovie() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view?.showAddMovie()
     }
 
-    override fun editMovie() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long) {
+        val updatedWatchedMovie = watchedMovie.copy(watchedDate = updatedDate)
+        userRepository.updateWatchedMovie(updatedWatchedMovie, { success ->
+            if (success) load()
+        })
     }
 
-    override fun deleteMovie() {
+    override fun deleteMovie(watchedMovie: WatchedMovie) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

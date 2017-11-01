@@ -16,13 +16,14 @@ interface WelcomeContract {
         fun hideMoviesList()
         fun showTooltip()
         fun hideTooltip()
+        fun showAddMovie()
     }
 
     interface Presenter: BasePresenter<View> {
         fun load()
         fun addMovie()
-        fun editMovie()
-        fun deleteMovie()
+        fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long)
+        fun deleteMovie(watchedMovie: WatchedMovie)
         fun logout()
     }
 }
