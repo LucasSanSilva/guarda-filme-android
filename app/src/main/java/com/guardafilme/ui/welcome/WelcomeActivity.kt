@@ -1,8 +1,6 @@
 package com.guardafilme.ui.welcome
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,22 +9,20 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import dagger.android.AndroidInjection
-import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_welcome.*
 import com.guardafilme.MainActivity
 import com.guardafilme.R
 import com.guardafilme.data.AuthProvider
 import com.guardafilme.model.WatchedMovie
-import com.guardafilme.ui.BaseActivity
 import com.guardafilme.ui.UiUtils
 import com.guardafilme.ui.searchmovie.SearchMovieActivity
+import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
 /**
  * Created by lucassantos on 05/08/17.
  */
-class WelcomeActivity: BaseActivity() {
+class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
     companion object {
         val USER_ID_EXTRA = "USER_ID_EXTRA"
         val ADD_MOVIE_REQUEST = 435
@@ -39,7 +35,9 @@ class WelcomeActivity: BaseActivity() {
     }
 
     private lateinit var mAdapter: WatchedMoviesAdapter
-    private lateinit var viewModel: WelcomeViewModel
+
+    @Inject
+    lateinit var presenter: WelcomeContract.Presenter
 
     @Inject
     lateinit var authProvider: AuthProvider
@@ -47,6 +45,7 @@ class WelcomeActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        presenter.attach(this)
 
         // Setup view
         setContentView(R.layout.activity_welcome)
@@ -55,8 +54,6 @@ class WelcomeActivity: BaseActivity() {
             val intent = SearchMovieActivity.createIntent(this)
             startActivityForResult(intent, ADD_MOVIE_REQUEST)
         }
-
-        showLoading()
 
         // Setup RecyclerView
         val layoutManager = LinearLayoutManager(this)
@@ -70,18 +67,12 @@ class WelcomeActivity: BaseActivity() {
             }
 
             override fun removeClicked(watchedMovie: WatchedMovie) {
-                viewModel.removeWatchedMovie(watchedMovie)
+                presenter.deleteMovie(watchedMovie)
             }
         })
         moviesRecyclerView.adapter = mAdapter
 
-        // Setup ViewModel
-        val userId = intent.getStringExtra(USER_ID_EXTRA)
-        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
-        viewModel.getWatchedMovies().observe(this, Observer { watchedMovies ->
-            mAdapter.setItems(watchedMovies)
-            hideLoading()
-        })
+        presenter.load()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,23 +96,45 @@ class WelcomeActivity: BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == ADD_MOVIE_REQUEST && resultCode == Activity.RESULT_OK) {
-            viewModel.loadWatchedMovies()
+            presenter.load()
         }
     }
 
+    override fun addWatchedMovies(watchedMovies: List<WatchedMovie>) {
+        mAdapter.setItems(watchedMovies)
+    }
+
     override fun showLoading() {
-        main_layout.visibility = View.GONE
         loading_view.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
         loading_view.visibility = View.GONE
+    }
+
+    override fun showMoviesList() {
         main_layout.visibility = View.VISIBLE
+    }
+
+    override fun hideMoviesList() {
+        main_layout.visibility = View.GONE
+    }
+
+    override fun showTooltip() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideTooltip() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showAddMovie() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {
         UiUtils.showDatePickerDialog(this, { date ->
-            viewModel.updateWatchedMovie(watchedMovie, date)
+            presenter.editMovie(watchedMovie, date)
         })
     }
 }

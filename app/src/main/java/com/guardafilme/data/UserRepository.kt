@@ -49,7 +49,7 @@ class UserRepository @Inject constructor() {
         })
     }
 
-    fun removeWatchedMovie(
+    fun deleteWatchedMovie(
             watchedMovieId: String,
             onComplete: (success: Boolean) -> Unit
     ) {

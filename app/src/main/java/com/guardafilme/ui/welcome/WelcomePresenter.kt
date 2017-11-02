@@ -20,8 +20,12 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
     }
 
     override fun load() {
+        view?.hideMoviesList()
+        view?.showLoading()
         userRepository.getWatchedMovies({ watchedMovies ->
             view?.addWatchedMovies(watchedMovies)
+            view?.hideLoading()
+            view?.showMoviesList()
         })
     }
 
@@ -37,7 +41,9 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
     }
 
     override fun deleteMovie(watchedMovie: WatchedMovie) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userRepository.deleteWatchedMovie(watchedMovie.uid, { success ->
+            if (success) load()
+        })
     }
 
     override fun logout() {

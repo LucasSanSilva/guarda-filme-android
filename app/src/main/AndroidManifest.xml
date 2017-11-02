@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.welcome.WelcomeActivity" />
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.searchmovie.SearchMovieActivity" />
     </application>
 
