@@ -22,7 +22,7 @@ interface WelcomeContract {
     interface Presenter: BasePresenter<View> {
         fun load()
         fun addMovie()
-        fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long)
+        fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long, updatedRate: Float = 0F)
         fun deleteMovie(watchedMovie: WatchedMovie)
         fun logout()
     }

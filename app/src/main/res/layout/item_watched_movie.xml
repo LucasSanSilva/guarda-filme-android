@@ -20,7 +20,15 @@
             android:id="@+id/watched_date_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:numStars="5"
+            android:isIndicator="true"/>
+
     </LinearLayout>
     
     <ImageView

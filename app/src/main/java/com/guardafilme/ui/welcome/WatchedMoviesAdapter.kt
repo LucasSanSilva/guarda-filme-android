@@ -37,6 +37,9 @@ class WatchedMoviesAdapter(
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val formattedDate = sdf.format(Date(watchedMovie.watchedDate))
             itemView.watched_date_text_view.text = formattedDate
+
+            itemView.rating_bar.rating = watchedMovie.rate
+
             itemView.options_button.setOnClickListener {
                 val popupMenu = PopupMenu(context, itemView.options_button)
                 popupMenu.inflate(R.menu.menu_watched_movie)

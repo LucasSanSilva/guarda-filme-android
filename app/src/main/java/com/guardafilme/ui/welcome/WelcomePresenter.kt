@@ -33,8 +33,8 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
         view?.showAddMovie()
     }
 
-    override fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long) {
-        val updatedWatchedMovie = watchedMovie.copy(watchedDate = updatedDate)
+    override fun editMovie(watchedMovie: WatchedMovie, updatedDate: Long, updatedRate: Float) {
+        val updatedWatchedMovie = watchedMovie.copy(watchedDate = updatedDate, rate = updatedRate)
         userRepository.updateWatchedMovie(updatedWatchedMovie, { success ->
             if (success) load()
         })

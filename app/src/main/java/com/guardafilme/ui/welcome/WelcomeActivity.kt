@@ -134,7 +134,12 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
 
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {
         UiUtils.showDatePickerDialog(this, { date ->
-            presenter.editMovie(watchedMovie, date)
+            UiUtils.showRateDialog(this, { rate ->
+                presenter.editMovie(watchedMovie, date, rate)
+            }, {
+                presenter.editMovie(watchedMovie, date)
+            })
+
         })
     }
 }
