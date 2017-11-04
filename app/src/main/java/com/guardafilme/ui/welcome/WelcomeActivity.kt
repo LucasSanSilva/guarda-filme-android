@@ -51,8 +51,7 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
         setContentView(R.layout.activity_welcome)
         supportActionBar?.title = getString(R.string.title_watched_movies)
         fab.setOnClickListener {
-            val intent = SearchMovieActivity.createIntent(this)
-            startActivityForResult(intent, ADD_MOVIE_REQUEST)
+            presenter.addMovie()
         }
 
         // Setup RecyclerView
@@ -100,7 +99,7 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
         }
     }
 
-    override fun addWatchedMovies(watchedMovies: List<WatchedMovie>) {
+    override fun addWatchedMovies(watchedMovies: List<WatchedMovie>?) {
         mAdapter.setItems(watchedMovies)
     }
 
@@ -129,7 +128,8 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
     }
 
     override fun showAddMovie() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = SearchMovieActivity.createIntent(this)
+        startActivityForResult(intent, ADD_MOVIE_REQUEST)
     }
 
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {

@@ -9,7 +9,7 @@ import com.guardafilme.model.WatchedMovie
 interface WelcomeContract {
 
     interface View {
-        fun addWatchedMovies(watchedMovies: List<WatchedMovie>)
+        fun addWatchedMovies(watchedMovies: List<WatchedMovie>?)
         fun showLoading()
         fun hideLoading()
         fun showMoviesList()
