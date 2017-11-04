@@ -44,8 +44,8 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         val moviesRecyclerView = movies_recycler_view
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        mAdapter = SearchMovieAdapter(this, { movie, watchedDate ->
-            TempDataStore.addWatchedMove(movie, watchedDate)
+        mAdapter = SearchMovieAdapter(this, { movie, watchedDate, rate ->
+            TempDataStore.addWatchedMove(movie, watchedDate, rate)
             setResult(Activity.RESULT_OK)
             finish()
         })

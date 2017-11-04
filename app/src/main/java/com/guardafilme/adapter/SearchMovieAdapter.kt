@@ -2,6 +2,7 @@ package com.guardafilme.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,14 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 import com.guardafilme.R
 import com.guardafilme.model.Movie
 import com.guardafilme.ui.UiUtils
+import kotlin.concurrent.fixedRateTimer
 
 /**
  * Created by lucassantos on 11/10/17.
  */
 class SearchMovieAdapter(
         private val context: Context,
-        private val onMovieSelected: (movie: Movie, watchedDate: Long) -> Unit
+        private val onMovieSelected: (movie: Movie, watchedDate: Long, rate: Float) -> Unit
 ): RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder>() {
 
     var movies: List<Movie> = emptyList()
@@ -40,13 +42,23 @@ class SearchMovieAdapter(
 
     class SearchMovieViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(movie: Movie, context: Context, onMovieSelected: (movie: Movie, watchedDate: Long) -> Unit) {
+        fun bindItem(
+                movie: Movie,
+                context: Context,
+                onMovieSelected: (movie: Movie, watchedDate: Long, rate: Float) -> Unit
+        ) {
+
             itemView.title_text_view.text = movie.title
             itemView.year_text_view.text = movie.year
 
             itemView.setOnClickListener {
                 UiUtils.showDatePickerDialog(context, { watchedDate ->
-                    onMovieSelected(movie, watchedDate)
+                    UiUtils.showRateDialog(context, { rate ->
+                        Log.d("Teste", "MAOE " + rate.toString())
+                        onMovieSelected(movie, watchedDate, rate)
+                    }, {
+                        onMovieSelected(movie, watchedDate, 0F)
+                    })
                 })
             }
         }

@@ -10,6 +10,7 @@ data class WatchedMovie(
         val originalTitle: String,
         val watchedDate: Long,
         val poster: String = "",
-        val backdrop: String = "") {
+        val backdrop: String = "",
+        val rate: Float = 0F) {
     constructor() : this("", -1, "", "", -1)
 }

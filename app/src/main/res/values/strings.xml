@@ -12,7 +12,11 @@
     <string name="action_logout">Sair</string>
     <string name="action_edit">Editar</string>
     <string name="action_remove">Excluir</string>
+    <string name="action_ok">Ok</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_later">Mais tarde</string>
 
     <string name="title_watched_movies">Filmes Assistidos</string>
     <string name="title_search_movies">Procurar Filmes</string>
+    <string name="title_rate_movie">Avalie o Filme</string>
 </resources>
