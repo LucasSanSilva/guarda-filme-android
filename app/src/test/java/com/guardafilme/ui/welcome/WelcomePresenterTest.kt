@@ -7,9 +7,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.assertThat
 import org.mockito.*
-import org.mockito.Mockito.doAnswer
-import org.mockito.Mockito.verify
 import org.hamcrest.core.IsEqual.equalTo
+import org.mockito.Mockito.*
 
 /**
  * Created by lucassantos on 03/11/17.
@@ -60,7 +59,6 @@ class WelcomePresenterTest {
         welcomePresenter.load()
 
         // verifica se coloca o loadingView
-        verify(welcomeView).hideMoviesList()
         verify(welcomeView).showLoading()
 
         // verifica se a view recebe a quantidade certa de filmes
@@ -69,7 +67,23 @@ class WelcomePresenterTest {
 
         // verifica se o loading foi tirado
         verify(welcomeView).hideLoading()
+        verify(welcomeView).hideTooltip()
         verify(welcomeView).showMoviesList()
+    }
+
+    @Test
+    fun loadMoviesWhenEmptyList_shouldShowTooltip() {
+        watchedMovies = emptyList()
+
+        welcomePresenter.load()
+
+        // verifica se coloca o loadingView
+        verify(welcomeView).showLoading()
+
+        // verifica se o loading foi tirado e tooltip exibido
+        verify(welcomeView).hideLoading()
+        verify(welcomeView).hideMoviesList()
+        verify(welcomeView).showTooltip()
     }
 
     @Test

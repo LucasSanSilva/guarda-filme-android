@@ -17,6 +17,7 @@ import com.guardafilme.ui.UiUtils
 import com.guardafilme.ui.searchmovie.SearchMovieActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_welcome.*
+import kotlinx.android.synthetic.main.activity_welcome.view.*
 import javax.inject.Inject
 
 /**
@@ -104,27 +105,29 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
     }
 
     override fun showLoading() {
+        main_layout.visibility = View.GONE
         loading_view.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
         loading_view.visibility = View.GONE
-    }
-
-    override fun showMoviesList() {
         main_layout.visibility = View.VISIBLE
     }
 
+    override fun showMoviesList() {
+        watched_movies_recycler_view.visibility = View.VISIBLE
+    }
+
     override fun hideMoviesList() {
-        main_layout.visibility = View.GONE
+        watched_movies_recycler_view.visibility = View.GONE
     }
 
     override fun showTooltip() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        main_layout.tooltip_view.visibility = View.VISIBLE
     }
 
     override fun hideTooltip() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        main_layout.tooltip_view.visibility = View.GONE
     }
 
     override fun showAddMovie() {

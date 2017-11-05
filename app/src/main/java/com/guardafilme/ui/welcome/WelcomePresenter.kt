@@ -20,12 +20,17 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
     }
 
     override fun load() {
-        view?.hideMoviesList()
         view?.showLoading()
         userRepository.getWatchedMovies({ watchedMovies ->
-            view?.addWatchedMovies(watchedMovies)
             view?.hideLoading()
-            view?.showMoviesList()
+            if (watchedMovies.isNotEmpty()) {
+                view?.hideTooltip()
+                view?.addWatchedMovies(watchedMovies)
+                view?.showMoviesList()
+            } else {
+                view?.hideMoviesList()
+                view?.showTooltip()
+            }
         })
     }
 

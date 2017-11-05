@@ -19,4 +19,6 @@
     <string name="title_watched_movies">Filmes Assistidos</string>
     <string name="title_search_movies">Procurar Filmes</string>
     <string name="title_rate_movie">Avalie o Filme</string>
+
+    <string name="tooltip_watched_movies">Aqui ficam os filmes que você adiciona na sua lista de assistidos. Clique em "+" para adicionar seu primeiro filme.</string>
 </resources>
