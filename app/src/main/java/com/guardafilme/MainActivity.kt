@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                                     Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                             AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
                                             AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                            .setLogo(R.drawable.logo)
+                            .setTheme(R.style.LoginTheme)
                             .build(),
                     RC_SIGN_IN)
         }
