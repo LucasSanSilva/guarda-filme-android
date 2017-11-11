@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.guardafilme.model.User
 import com.guardafilme.model.WatchedMovie
 import javax.inject.Inject
 
@@ -12,6 +13,15 @@ import javax.inject.Inject
  * Created by lucassantos on 03/11/17.
  */
 class GFUserRepository @Inject constructor(): UserRepository {
+    override fun getCurrentUser(): User? {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            return User(currentUser.uid, currentUser.displayName)
+        }
+
+        return null
+    }
+
     override fun getUserId(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {

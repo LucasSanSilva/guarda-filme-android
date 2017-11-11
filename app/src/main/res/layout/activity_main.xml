@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.guardafilme.MainActivity"
+    tools:context="com.guardafilme.ui.main.MainActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:id="@+id/main_layout"
     android:background="@color/colorAccent">
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo"/>
 
-</android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id="@+id/login_message_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Tooltip"
+            android:paddingBottom="16dp"
+            android:text="@string/tooltip_login"/>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_enter"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.guardafilme.MainActivity
+import com.guardafilme.ui.main.MainActivity
 import com.guardafilme.R
 import com.guardafilme.data.AuthProvider
 import com.guardafilme.model.WatchedMovie
@@ -25,12 +25,10 @@ import javax.inject.Inject
  */
 class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
     companion object {
-        val USER_ID_EXTRA = "USER_ID_EXTRA"
         val ADD_MOVIE_REQUEST = 435
 
-        fun createIntent(context: Context, userId: String): Intent {
+        fun createIntent(context: Context): Intent {
             val intent = Intent(context, WelcomeActivity::class.java)
-            intent.putExtra(USER_ID_EXTRA, userId)
             return intent
         }
     }

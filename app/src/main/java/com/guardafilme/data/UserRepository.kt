@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.guardafilme.model.User
 import com.guardafilme.model.WatchedMovie
 import javax.inject.Inject
 
@@ -14,6 +15,8 @@ import javax.inject.Inject
  * Created by lucassantos on 17/10/17.
  */
 interface UserRepository {
+    fun getCurrentUser(): User?
+
     fun getUserId(): String
 
     fun getWatchedMovies(listener: (List<WatchedMovie>) -> Unit)
