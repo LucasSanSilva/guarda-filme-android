@@ -3,6 +3,7 @@ package com.guardafilme.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.firebase.ui.auth.IdpResponse
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.attach(this)
 
         setContentView(R.layout.activity_main)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorAccentDark)
     }
 
     override fun onStart() {

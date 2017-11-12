@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.guardafilme.ui.main.MainActivity"
@@ -12,7 +11,7 @@
     android:background="@color/colorAccent">
 
     <ImageView
-        android:layout_width="300dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/logo"/>
@@ -29,13 +28,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Tooltip"
-            android:paddingBottom="16dp"
+            android:paddingBottom="32dp"
+            android:textColor="@color/white"
             android:text="@string/tooltip_login"/>
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button"
+            android:width="150dp"
             android:text="@string/action_enter"/>
 
     </LinearLayout>
