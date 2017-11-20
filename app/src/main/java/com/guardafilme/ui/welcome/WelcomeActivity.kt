@@ -139,8 +139,7 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
                 presenter.editMovie(watchedMovie, date, rate)
             }, {
                 presenter.editMovie(watchedMovie, date)
-            })
-
-        })
+            }, watchedMovie.rate)
+        }, watchedMovie.getWatchedDateAsCalendar())
     }
 }

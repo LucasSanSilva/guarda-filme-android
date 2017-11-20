@@ -16,9 +16,11 @@ import java.util.*
  */
 class UiUtils {
     companion object {
-        fun showDatePickerDialog(context: Context, dateSelectedLister: (Long) -> Unit) {
-            val currentDate = Calendar.getInstance()
-
+        fun showDatePickerDialog(
+                context: Context,
+                dateSelectedLister: (Long) -> Unit,
+                defaultDate: Calendar = Calendar.getInstance()
+        ) {
             val datePickerDialog = DatePickerDialog(
                     context,
                     { _, year, month, day ->
@@ -27,19 +29,24 @@ class UiUtils {
                         val watchedDate = calendar.timeInMillis
                         dateSelectedLister(watchedDate)
                     },
-                    currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH)
+                    defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
         }
 
-        fun showRateDialog(context: Context, rateListener: (Float) -> Unit, cancelListener: () -> Unit) {
+        fun showRateDialog(
+                context: Context,
+                rateListener: (Float) -> Unit,
+                cancelListener: () -> Unit,
+                defaultRate: Float = 0F) {
             val dialogBuilder = AlertDialog.Builder(context)
             val inflater = context.layoutInflater
             val rateLayout = inflater.inflate(R.layout.dialog_rate_movie, null)
+            val ratingBar = rateLayout.find<RatingBar>(R.id.rating_bar)
+            ratingBar.rating = defaultRate
 
             dialogBuilder.setView(rateLayout)
                     .setPositiveButton(R.string.action_ok, { dialogInterface, id ->
-                        val ratingBar = rateLayout.find<RatingBar>(R.id.rating_bar)
                         rateListener(ratingBar.rating)
                     })
                     .setNegativeButton(R.string.action_later, { dialogInterface, id ->
