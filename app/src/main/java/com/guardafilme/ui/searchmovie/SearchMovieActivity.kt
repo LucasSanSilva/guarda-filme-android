@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_search_movie.*
 import com.guardafilme.R
-import com.guardafilme.adapter.SearchMovieAdapter
 import com.guardafilme.data.MoviesProvider
 import com.guardafilme.data.TempDataStore
 import com.guardafilme.model.Movie

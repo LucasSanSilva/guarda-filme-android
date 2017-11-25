@@ -1,4 +1,4 @@
-package com.guardafilme.adapter
+package com.guardafilme.ui.searchmovie
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 import com.guardafilme.R
 import com.guardafilme.model.Movie
 import com.guardafilme.ui.UiUtils
-import kotlin.concurrent.fixedRateTimer
 
 /**
  * Created by lucassantos on 11/10/17.
