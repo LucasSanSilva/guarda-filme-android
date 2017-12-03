@@ -1,13 +1,17 @@
 package com.guardafilme.ui.searchmovie
 
 import com.guardafilme.data.MoviesRepository
+import com.guardafilme.data.UserRepository
 import com.guardafilme.model.Movie
 import javax.inject.Inject
 
 /**
  * Created by lucassantos on 20/11/17.
  */
-class SearchMoviePresenter @Inject constructor(val moviesRepository: MoviesRepository): SearchMovieContract.Presenter {
+class SearchMoviePresenter @Inject constructor(
+        val moviesRepository: MoviesRepository,
+        val userRepository: UserRepository
+): SearchMovieContract.Presenter {
 
     var view: SearchMovieContract.View? = null
 
@@ -20,11 +24,19 @@ class SearchMoviePresenter @Inject constructor(val moviesRepository: MoviesRepos
     }
 
     override fun searchMovies(query: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view?.hideMoviesList()
+        view?.showLoading()
+        moviesRepository.searchMovies(query, { movies ->
+            view?.addMovies(movies)
+            view?.hideLoading()
+            view?.showMoviesList()
+        })
     }
 
-    override fun movieClicked(movie: Movie) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun movieClicked(movie: Movie, watchedDate: Long, rate: Float) {
+        userRepository.addWatchedMove(movie, watchedDate, rate, { success ->
+            view?.finishWithSuccess()
+        })
     }
 
 }

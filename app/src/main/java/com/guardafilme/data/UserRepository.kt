@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.guardafilme.model.Movie
 import com.guardafilme.model.User
 import com.guardafilme.model.WatchedMovie
 import javax.inject.Inject
@@ -28,6 +29,13 @@ interface UserRepository {
 
     fun updateWatchedMovie(
             watchedMovie: WatchedMovie,
+            onComplete: (success: Boolean) -> Unit
+    )
+
+    fun addWatchedMove(
+            movie: Movie,
+            watchedDate: Long,
+            rate: Float,
             onComplete: (success: Boolean) -> Unit
     )
 }

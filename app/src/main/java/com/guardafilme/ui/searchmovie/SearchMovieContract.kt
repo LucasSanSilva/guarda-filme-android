@@ -19,7 +19,7 @@ interface SearchMovieContract {
 
     interface Presenter: BasePresenter<View> {
         fun searchMovies(query: String)
-        fun movieClicked(movie: Movie)
+        fun movieClicked(movie: Movie, watchedDate: Long, rate: Float)
     }
 
 }

@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.guardafilme.model.Movie
 import com.guardafilme.model.User
 import com.guardafilme.model.WatchedMovie
 import javax.inject.Inject
@@ -13,6 +14,8 @@ import javax.inject.Inject
  * Created by lucassantos on 03/11/17.
  */
 class GFUserRepository @Inject constructor(): UserRepository {
+    private val WATCHED_MOVIES_REF = "watched_movies"
+
     override fun getCurrentUser(): User? {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
@@ -84,6 +87,36 @@ class GFUserRepository @Inject constructor(): UserRepository {
                 .child(watchedMovie.uid)
         watchedMovieRef.setValue(watchedMovie).addOnCompleteListener { task ->
             onComplete(task.isSuccessful)
+        }
+    }
+
+    override fun addWatchedMove(
+            movie: Movie,
+            watchedDate: Long,
+            rate: Float,
+            onComplete: (success: Boolean) -> Unit
+    ) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            val watchedRef = FirebaseDatabase
+                    .getInstance()
+                    .reference
+                    .child(WATCHED_MOVIES_REF)
+                    .child(currentUser.uid)
+                    .push()
+
+            val watchedMovie = WatchedMovie(
+                    watchedRef.key,
+                    movie.id,
+                    movie.title,
+                    movie.originalTitle,
+                    watchedDate,
+                    movie.poster,
+                    movie.backdrop,
+                    rate
+            )
+            watchedRef.setValue(watchedMovie)
         }
     }
 }
