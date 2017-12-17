@@ -23,10 +23,10 @@ class SearchMoviePresenter @Inject constructor(
         this.view = null
     }
 
-    override fun searchMovies(query: String) {
+    override fun searchMovies(apiKey: String, query: String) {
         view?.hideMoviesList()
         view?.showLoading()
-        moviesRepository.searchMovies(query, { movies ->
+        moviesRepository.searchMovies(apiKey, query, { movies ->
             view?.addMovies(movies)
             view?.hideLoading()
             view?.showMoviesList()

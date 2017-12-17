@@ -2,7 +2,9 @@ package com.guardafilme.di
 
 import android.app.Application
 import android.content.Context
+import com.guardafilme.data.GFMoviesRepository
 import com.guardafilme.data.GFUserRepository
+import com.guardafilme.data.MoviesRepository
 import com.guardafilme.data.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -25,5 +27,11 @@ class ApplicationModule {
     @Singleton
     fun provideUserRepository(userRepository: GFUserRepository): UserRepository {
         return userRepository
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoviesRepository(moviesRepository: GFMoviesRepository): MoviesRepository {
+        return moviesRepository
     }
 }

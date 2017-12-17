@@ -116,7 +116,9 @@ class GFUserRepository @Inject constructor(): UserRepository {
                     movie.backdrop,
                     rate
             )
-            watchedRef.setValue(watchedMovie)
+            watchedRef.setValue(watchedMovie).addOnCompleteListener { task ->
+                onComplete(task.isSuccessful)
+            }
         }
     }
 }

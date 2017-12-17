@@ -12,9 +12,9 @@ import javax.inject.Inject
  * Created by lucassantos on 20/11/17.
  */
 class GFMoviesRepository @Inject constructor(): MoviesRepository {
-    override fun searchMovies(query: String, onMoviesLoaded: (movies: List<Movie>) -> Unit) {
+    override fun searchMovies(apiKey: String, query: String, onMoviesLoaded: (movies: List<Movie>) -> Unit) {
         doAsync {
-            val searchResult = TmdbApi("TODO").search.searchMovie(query, 0, "pt-BR", true, 0)
+            val searchResult = TmdbApi(apiKey).search.searchMovie(query, 0, "pt-BR", true, 0)
             uiThread {
                 onMoviesLoaded(convertTmdbMoviesToInternal(searchResult.results))
             }

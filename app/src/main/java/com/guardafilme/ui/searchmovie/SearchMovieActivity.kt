@@ -12,15 +12,15 @@ import android.view.View
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_search_movie.*
 import com.guardafilme.R
-import com.guardafilme.data.MoviesProvider
-import com.guardafilme.data.TempDataStore
 import com.guardafilme.model.Movie
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 
 /**
  * Created by lucassantos on 06/08/17.
  */
-class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
+class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener, SearchMovieContract.View {
 
     companion object {
         fun createIntent(context: Context): Intent {
@@ -28,14 +28,17 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
-    private val ARG_MOVIES = "ARG_MOVIES"
+    @Inject
+    lateinit var presenter: SearchMovieContract.Presenter
 
     private lateinit var mAdapter: SearchMovieAdapter
     private lateinit var mSearchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
+        presenter.attach(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.title_search_movies)
@@ -44,19 +47,9 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
 
         mAdapter = SearchMovieAdapter(this, { movie, watchedDate, rate ->
-            TempDataStore.addWatchedMove(movie, watchedDate, rate)
-            setResult(Activity.RESULT_OK)
-            finish()
+            presenter.movieClicked(movie, watchedDate, rate)
         })
         moviesRecyclerView.adapter = mAdapter
-
-        if (savedInstanceState != null) {
-            val movies = savedInstanceState.getParcelableArray(ARG_MOVIES)
-            if (movies != null) {
-                @Suppress("UNCHECKED_CAST")
-                mAdapter.setItems(movies.asList() as List<Movie>)
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,10 +64,9 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelableArray(ARG_MOVIES, mAdapter.movies.toTypedArray())
-
-        super.onSaveInstanceState(outState)
+    override fun onStop() {
+        presenter.dettach()
+        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,18 +79,37 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String): Boolean {
         mSearchView.clearFocus()
-        movies_recycler_view.visibility = View.GONE
-        loading_view.visibility = View.VISIBLE
-        MoviesProvider.searchMovies(this, query, { movies: List<Movie> ->
-            mAdapter.setItems(movies)
-            movies_recycler_view.visibility = View.VISIBLE
-            loading_view.visibility = View.GONE
-        })
+        presenter.searchMovies(getString(R.string.tmdb_key), query)
 
         return true
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
         return false
+    }
+
+    override fun addMovies(movies: List<Movie>?) {
+        mAdapter.setItems(movies as List<Movie>)
+    }
+
+    override fun showLoading() {
+        loading_view.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loading_view.visibility = View.GONE
+    }
+
+    override fun showMoviesList() {
+        movies_recycler_view.visibility = View.VISIBLE
+    }
+
+    override fun hideMoviesList() {
+        movies_recycler_view.visibility = View.GONE
+    }
+
+    override fun finishWithSuccess() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 }

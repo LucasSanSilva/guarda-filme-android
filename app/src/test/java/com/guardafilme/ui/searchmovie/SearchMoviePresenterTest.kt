@@ -54,8 +54,8 @@ class SearchMoviePresenterTest {
                 Movie(4, "teste 4", "teste 4", "1998")
         )
 
-        Mockito.`when`(moviesRepository.searchMovies(anyObject(), anyObject())).thenAnswer { invocation ->
-            val listener: (List<Movie>) -> Unit = invocation.arguments[1] as (List<Movie>) -> Unit
+        Mockito.`when`(moviesRepository.searchMovies(anyObject(), anyObject(), anyObject())).thenAnswer { invocation ->
+            val listener: (List<Movie>) -> Unit = invocation.arguments[2] as (List<Movie>) -> Unit
             listener.invoke(movies)
         }
 
@@ -71,7 +71,7 @@ class SearchMoviePresenterTest {
 
     @Test
     fun searchMovies_shouldWorkCorrectly() {
-        searchMoviePresenter.searchMovies("teste")
+        searchMoviePresenter.searchMovies("teste", "teste")
 
         verify(searchMovieView).showLoading()
         verify(searchMovieView).hideMoviesList()

@@ -2,6 +2,8 @@ package com.guardafilme.di
 
 import com.guardafilme.ui.main.MainActivity
 import com.guardafilme.ui.main.MainActivityModule
+import com.guardafilme.ui.searchmovie.SearchMovieActivity
+import com.guardafilme.ui.searchmovie.SearchMovieActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import com.guardafilme.ui.welcome.WelcomeActivity
@@ -19,4 +21,8 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     abstract fun mainActivity(): MainActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = arrayOf(SearchMovieActivityModule::class))
+    abstract fun searchMovieActivity(): SearchMovieActivity
 }
