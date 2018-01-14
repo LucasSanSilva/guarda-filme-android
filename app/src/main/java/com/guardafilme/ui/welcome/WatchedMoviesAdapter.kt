@@ -3,12 +3,16 @@ package com.guardafilme.ui.welcome
 import android.content.Context
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.guardafilme.Constants
+import com.guardafilme.Constants.Companion.IMAGES_URL
 import kotlinx.android.synthetic.main.item_watched_movie.view.*
 import com.guardafilme.R
+import com.guardafilme.Utils
 import com.guardafilme.model.WatchedMovie
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +36,12 @@ class WatchedMoviesAdapter(
             val watchedMovieCallback: WatchedMovieCallback
     ): RecyclerView.ViewHolder(itemView) {
         fun bindItem(watchedMovie: WatchedMovie) {
+            Glide.with(context)
+                    .load(IMAGES_URL + watchedMovie.poster)
+                    .apply(RequestOptions()
+                            .centerCrop())
+                    .into(itemView.poster_image_view)
+
             itemView.title_text_view.text = watchedMovie.title
 
             val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -67,6 +77,14 @@ class WatchedMoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchedMovieViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_watched_movie, parent, false)
+
+        val posterWidth = Utils.getScreenWidth(context) / 2
+        val posterHeight = Constants.POSTER_RATIO * posterWidth
+
+        val layoutParams = itemView.poster_image_view.layoutParams
+        layoutParams.height = posterHeight.toInt()
+        itemView.poster_image_view.layoutParams = layoutParams
+
         return WatchedMovieViewHolder(itemView, context, watchedMovieCallback)
     }
 

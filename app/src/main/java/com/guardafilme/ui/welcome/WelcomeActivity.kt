@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -54,9 +55,9 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
         }
 
         // Setup RecyclerView
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = GridLayoutManager(this, 2)
         layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
+//        layoutManager.stackFromEnd = true
         val moviesRecyclerView = watched_movies_recycler_view
         moviesRecyclerView.layoutManager = layoutManager
         mAdapter = WatchedMoviesAdapter(this, object : WatchedMoviesAdapter.WatchedMovieCallback {

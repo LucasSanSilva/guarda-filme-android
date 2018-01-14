@@ -1,5 +1,12 @@
 package com.guardafilme
 
+import android.content.Context
+import android.content.Context.WINDOW_SERVICE
+import android.view.WindowManager
+import android.util.DisplayMetrics
+
+
+
 /**
  * Created by lucassantos on 12/10/17.
  */
@@ -19,6 +26,13 @@ class Utils {
             }
 
             return splitDate[0]
+        }
+
+        fun getScreenWidth(context: Context): Int {
+            val dm = DisplayMetrics()
+            val windowManager = context.getSystemService(WINDOW_SERVICE) as WindowManager
+            windowManager.defaultDisplay.getMetrics(dm)
+            return dm.widthPixels
         }
     }
 }
