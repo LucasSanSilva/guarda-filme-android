@@ -27,6 +27,7 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
                 view?.hideTooltip()
                 view?.addWatchedMovies(watchedMovies)
                 view?.showMoviesList()
+                view?.scrollToTop()
             } else {
                 view?.hideMoviesList()
                 view?.showTooltip()

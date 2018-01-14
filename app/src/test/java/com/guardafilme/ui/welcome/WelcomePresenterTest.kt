@@ -65,6 +65,9 @@ class WelcomePresenterTest {
         verify(welcomeView).addWatchedMovies(showWatchedMoviesArgumentCaptor.capture())
         assertThat(showWatchedMoviesArgumentCaptor.value.size, equalTo(3))
 
+        // verifica se scrolla para o início da lista
+        verify(welcomeView).scrollToTop()
+
         // verifica se o loading foi tirado
         verify(welcomeView).hideLoading()
         verify(welcomeView).hideTooltip()

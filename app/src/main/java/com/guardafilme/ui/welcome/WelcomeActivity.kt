@@ -133,6 +133,10 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
         startActivityForResult(intent, ADD_MOVIE_REQUEST)
     }
 
+    override fun scrollToTop() {
+        watched_movies_recycler_view.scrollToPosition(mAdapter.itemCount - 1)
+    }
+
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {
         UiUtils.showDatePickerDialog(this, { date ->
             UiUtils.showRateDialog(this, { rate ->

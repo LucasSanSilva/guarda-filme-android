@@ -17,6 +17,7 @@ interface WelcomeContract {
         fun showTooltip()
         fun hideTooltip()
         fun showAddMovie()
+        fun scrollToTop()
     }
 
     interface Presenter: BasePresenter<View> {
