@@ -25,7 +25,7 @@ class WelcomePresenter @Inject constructor(val userRepository: UserRepository): 
             view?.hideLoading()
             if (watchedMovies.isNotEmpty()) {
                 view?.hideTooltip()
-                view?.addWatchedMovies(watchedMovies)
+                view?.addWatchedMovies(watchedMovies.reversed())
                 view?.showMoviesList()
                 view?.scrollToTop()
             } else {

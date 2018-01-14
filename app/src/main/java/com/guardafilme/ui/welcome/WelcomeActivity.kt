@@ -56,8 +56,6 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
 
         // Setup RecyclerView
         val layoutManager = GridLayoutManager(this, 2)
-        layoutManager.reverseLayout = true
-//        layoutManager.stackFromEnd = true
         val moviesRecyclerView = watched_movies_recycler_view
         moviesRecyclerView.layoutManager = layoutManager
         mAdapter = WatchedMoviesAdapter(this, object : WatchedMoviesAdapter.WatchedMovieCallback {
@@ -135,7 +133,7 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
     }
 
     override fun scrollToTop() {
-        watched_movies_recycler_view.scrollToPosition(mAdapter.itemCount - 1)
+        watched_movies_recycler_view.scrollToPosition(0)
     }
 
     private fun editWatchedMovie(watchedMovie: WatchedMovie) {
