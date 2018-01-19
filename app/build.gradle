@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:2.2.0'
     implementation "com.google.firebase:firebase-auth:$PLAY_SERVICES_BUILD_VERSION"
     implementation "com.google.firebase:firebase-database:$PLAY_SERVICES_BUILD_VERSION"
+    implementation "com.google.firebase:firebase-ads:$PLAY_SERVICES_BUILD_VERSION"
     implementation "com.google.android.gms:play-services-auth:$PLAY_SERVICES_BUILD_VERSION"
 
     implementation "com.android.support:design:$ANDROID_BUILD_VERSION"

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.firebase.ui.auth.IdpResponse
 import com.firebase.ui.auth.ResultCodes
+import com.google.android.gms.ads.MobileAds
 import com.guardafilme.R
 import com.guardafilme.data.AuthProvider
 import com.guardafilme.ui.welcome.WelcomeActivity
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         setContentView(R.layout.activity_main)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorAccentDark)
+
+        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
     }
 
     override fun onStart() {

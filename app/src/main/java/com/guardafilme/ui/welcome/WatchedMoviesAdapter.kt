@@ -25,6 +25,9 @@ class WatchedMoviesAdapter(
         val watchedMovieCallback: WatchedMovieCallback
 ): RecyclerView.Adapter<WatchedMoviesAdapter.WatchedMovieViewHolder>() {
 
+    val MOVIE_TYPE: Int = 0
+    val AD_TYPE: Int = 1
+
     interface WatchedMovieCallback {
         fun editClicked(watchedMovie: WatchedMovie)
         fun removeClicked(watchedMovie: WatchedMovie)
@@ -74,6 +77,13 @@ class WatchedMoviesAdapter(
     }
 
     var watchedMovies: List<WatchedMovie> = emptyList()
+
+    override fun getItemViewType(position: Int): Int {
+        if (position == 4) {
+            return AD_TYPE
+        }
+        return MOVIE_TYPE
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchedMovieViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_watched_movie, parent, false)
