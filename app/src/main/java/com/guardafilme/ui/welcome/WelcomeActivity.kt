@@ -56,6 +56,15 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
 
         // Setup RecyclerView
         val layoutManager = GridLayoutManager(this, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                if (position == 4) {
+                    return 2
+                }
+
+                return 1
+            }
+        }
         val moviesRecyclerView = watched_movies_recycler_view
         moviesRecyclerView.layoutManager = layoutManager
         mAdapter = WatchedMoviesAdapter(this, object : WatchedMoviesAdapter.WatchedMovieCallback {

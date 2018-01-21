@@ -13,3 +13,4 @@ app/release/
 app/src/main/res/values/tmdb.xml
 *google-services.json
 projectFilesBackup1/
+*keys.xml

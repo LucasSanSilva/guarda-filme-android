@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.guardafilme.Constants
 import com.guardafilme.Constants.Companion.IMAGES_URL
 import kotlinx.android.synthetic.main.item_watched_movie.view.*
@@ -23,15 +26,19 @@ import java.util.*
 class WatchedMoviesAdapter(
         val context: Context,
         val watchedMovieCallback: WatchedMovieCallback
-): RecyclerView.Adapter<WatchedMoviesAdapter.WatchedMovieViewHolder>() {
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val MOVIE_TYPE: Int = 0
     val AD_TYPE: Int = 1
+
+    val AD_POSITION: Int = 4
 
     interface WatchedMovieCallback {
         fun editClicked(watchedMovie: WatchedMovie)
         fun removeClicked(watchedMovie: WatchedMovie)
     }
+
+    class AdViewHolder(itemView: View, val adView: AdView): RecyclerView.ViewHolder(itemView)
 
     class WatchedMovieViewHolder(
             itemView: View,
@@ -79,13 +86,38 @@ class WatchedMoviesAdapter(
     var watchedMovies: List<WatchedMovie> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 4) {
+        if (position == AD_POSITION) {
             return AD_TYPE
         }
         return MOVIE_TYPE
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchedMovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == MOVIE_TYPE) {
+            return onCreateWatchedMovieViewHolder(parent)
+        }
+
+        return onCreateAdViewHolder(parent)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (position != AD_POSITION) {
+            if (position > AD_POSITION) {
+                (holder as WatchedMovieViewHolder).bindItem(watchedMovies[position - 1])
+            } else {
+                (holder as WatchedMovieViewHolder).bindItem(watchedMovies[position])
+            }
+        } else {
+            val adRequest = AdRequest.Builder().build()
+            (holder as AdViewHolder).adView.loadAd(adRequest)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return watchedMovies.size
+    }
+
+    private fun onCreateWatchedMovieViewHolder(parent: ViewGroup): WatchedMovieViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_watched_movie, parent, false)
 
         val posterWidth = Utils.getScreenWidth(context) / 2
@@ -98,12 +130,12 @@ class WatchedMoviesAdapter(
         return WatchedMovieViewHolder(itemView, context, watchedMovieCallback)
     }
 
-    override fun onBindViewHolder(holder: WatchedMovieViewHolder, position: Int) {
-        holder.bindItem(watchedMovies[position])
-    }
+    private fun onCreateAdViewHolder(parent: ViewGroup): AdViewHolder {
+        val adView = AdView(context)
+        adView.adSize = AdSize.BANNER
+        adView.adUnitId = context.getString(R.string.ad_unit)
 
-    override fun getItemCount(): Int {
-        return watchedMovies.size
+        return AdViewHolder(adView, adView)
     }
 
     fun setItems(movieItems: List<WatchedMovie>?) {
