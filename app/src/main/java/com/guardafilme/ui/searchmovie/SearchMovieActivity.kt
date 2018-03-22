@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_search_movie.*
 import com.guardafilme.R
 import com.guardafilme.model.Movie
 import dagger.android.AndroidInjection
+import org.jetbrains.anko.sdk25.coroutines.onQueryTextListener
+import java.util.*
 import javax.inject.Inject
 
 
@@ -31,8 +33,12 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener, 
     @Inject
     lateinit var presenter: SearchMovieContract.Presenter
 
+    val DELAY: Long = 500 // milliseconds
+
     private lateinit var mAdapter: SearchMovieAdapter
     private lateinit var mSearchView: SearchView
+
+    private var timer: Timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -85,7 +91,20 @@ class SearchMovieActivity: AppCompatActivity(), SearchView.OnQueryTextListener, 
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        return false
+        timer.cancel()
+        timer = Timer()
+        timer.schedule(
+            object : TimerTask() {
+                override fun run() {
+                    runOnUiThread {
+                        presenter.searchMovies(getString(R.string.tmdb_key), newText)
+                    }
+                }
+            },
+            DELAY
+        )
+
+        return true
     }
 
     override fun addMovies(movies: List<Movie>?) {
