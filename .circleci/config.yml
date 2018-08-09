@@ -11,9 +11,9 @@ jobs:
       - run:
           name: Create google-services.json
           command: echo $GOOGLE_SERVICES | base64 --decode > ~/code/app/google-services.json
-      - run:
-          name: Create tmdb.xml
-          command: echo $TMDB_CONFIG | base64 --decode > ~/code/app/src/main/res/values/tmdb.xml
+    #   - run:
+    #       name: Create tmdb.xml
+    #       command: echo $TMDB_CONFIG | base64 --decode > ~/code/app/src/main/res/values/tmdb.xml
       - run:
           name: Create keys.xml
           command: echo $KEYS | base64 --decode > ~/code/app/src/main/res/values/keys.xml
