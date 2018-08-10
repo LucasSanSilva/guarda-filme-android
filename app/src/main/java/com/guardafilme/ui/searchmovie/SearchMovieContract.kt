@@ -1,6 +1,7 @@
 package com.guardafilme.ui.searchmovie
 
 import com.guardafilme.base.BasePresenter
+import com.guardafilme.base.BaseView
 import com.guardafilme.model.Movie
 
 /**
@@ -8,10 +9,8 @@ import com.guardafilme.model.Movie
  */
 interface SearchMovieContract {
 
-    interface View {
+    interface View: BaseView {
         fun addMovies(movies: List<Movie>?)
-        fun showLoading()
-        fun hideLoading()
         fun showMoviesList()
         fun hideMoviesList()
         fun finishWithSuccess()

@@ -1,6 +1,7 @@
 package com.guardafilme.ui.welcome
 
 import com.guardafilme.base.BasePresenter
+import com.guardafilme.base.BaseView
 import com.guardafilme.model.WatchedMovie
 
 /**
@@ -8,10 +9,8 @@ import com.guardafilme.model.WatchedMovie
  */
 interface WelcomeContract {
 
-    interface View {
+    interface View: BaseView {
         fun addWatchedMovies(watchedMovies: List<WatchedMovie>?)
-        fun showLoading()
-        fun hideLoading()
         fun showMoviesList()
         fun hideMoviesList()
         fun showTooltip()
