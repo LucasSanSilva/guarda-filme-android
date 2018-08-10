@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_watched_movie.view.*
 import com.guardafilme.R
 import com.guardafilme.Utils
 import com.guardafilme.model.WatchedMovie
+import com.guardafilme.ui.moviedetail.MovieDetailActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,6 +52,10 @@ class WatchedMoviesAdapter(
                     .apply(RequestOptions()
                             .centerCrop())
                     .into(itemView.poster_image_view)
+            itemView.poster_image_view.setOnClickListener {
+                val intent = MovieDetailActivity.createIntent(context)
+                context.startActivity(intent)
+            }
 
             itemView.title_text_view.text = watchedMovie.title
 
