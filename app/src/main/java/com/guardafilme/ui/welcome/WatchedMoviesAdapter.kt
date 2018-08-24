@@ -52,8 +52,9 @@ class WatchedMoviesAdapter(
                     .apply(RequestOptions()
                             .centerCrop())
                     .into(itemView.poster_image_view)
+
             itemView.poster_image_view.setOnClickListener {
-                val intent = MovieDetailActivity.createIntent(context)
+                val intent = MovieDetailActivity.createIntent(context, watchedMovie.movieId)
                 context.startActivity(intent)
             }
 

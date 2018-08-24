@@ -17,8 +17,13 @@ import javax.inject.Inject
 class MovieDetailActivity: Activity(), MovieDetailContract.View {
 
     companion object {
-        fun createIntent(context: Context): Intent {
-            return Intent(context, MovieDetailActivity::class.java)
+        const val MOVIE_ID_EXTRA: String = "MOVIE_ID_EXTRA"
+
+        fun createIntent(context: Context, movieId: Int): Intent {
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(MOVIE_ID_EXTRA, movieId)
+
+            return intent
         }
     }
 
@@ -30,8 +35,11 @@ class MovieDetailActivity: Activity(), MovieDetailContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         presenter.attach(this)
+        presenter.setTmdbKey(getString(R.string.tmdb_key))
 
-        presenter.setMovie(24)
+        val movieId = intent.getIntExtra(MOVIE_ID_EXTRA, 0)
+
+        presenter.setMovie(movieId)
     }
 
     override fun showMovieData(movie: Movie) {

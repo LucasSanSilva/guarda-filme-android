@@ -21,6 +21,15 @@ class GFMoviesRepository @Inject constructor(): MoviesRepository {
         }
     }
 
+    override fun getMovieDetails(apiKey: String, movieId: Int, onMovieLoaded: (movie: MovieDb) -> Unit) {
+        doAsync {
+            val movieDb = TmdbApi(apiKey).movies.getMovie(movieId, "pt-BR")
+            uiThread {
+                onMovieLoaded(movieDb)
+            }
+        }
+    }
+
     private fun tmdbMovieToInternalMovie(tmdbMovie: MovieDb): Movie {
         val movie = Movie()
         movie.id = tmdbMovie.id

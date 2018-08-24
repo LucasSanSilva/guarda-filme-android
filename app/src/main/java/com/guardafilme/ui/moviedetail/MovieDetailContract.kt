@@ -11,6 +11,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter: BasePresenter<View> {
+        fun setTmdbKey(key: String)
         fun setMovie(movieId: Int)
     }
 
