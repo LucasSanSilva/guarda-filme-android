@@ -23,4 +23,8 @@
 
     <string name="tooltip_login">Bem vindo ao GuardaFilme! Para usar o aplicativo, clique abaixo para entrar na sua conta ou se registrar.</string>
     <string name="tooltip_watched_movies">Aqui ficam os filmes que você adiciona na sua lista de assistidos. Clique em "+" para adicionar seu primeiro filme.</string>
+
+    <string name="movie_year">Ano:</string>
+    <string name="movie_original_title">Título Original:</string>
+    <string name="movie_rating">Classificação:</string>
 </resources>

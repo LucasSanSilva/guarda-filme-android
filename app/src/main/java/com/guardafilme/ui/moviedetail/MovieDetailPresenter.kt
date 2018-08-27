@@ -22,20 +22,9 @@ class MovieDetailPresenter @Inject constructor(val moviesRepository: MoviesRepos
     }
 
     override fun setMovie(movieId: Int) {
-        moviesRepository.getMovieDetails(apiKey, movieId, { movieDb ->
-
+        moviesRepository.getMovieDetails(apiKey, movieId, { movie ->
+            view?.showMovieData(movie)
         })
-
-        val movie = Movie(
-                24,
-                "Filme Teste",
-                "Teste Movie",
-                "1988",
-                "/oj0ibkqKGJ3CvSTb3Pkx299P0SK.jpg",
-                "/kkS8PKa8c134vXsj2fQkNqOaCXU.jpg"
-        )
-
-        view?.showMovieData(movie)
     }
 
 }

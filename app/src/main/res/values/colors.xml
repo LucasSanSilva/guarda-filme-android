@@ -9,4 +9,7 @@
     <color name="primaryText">#D9000000</color>
     <color name="secondaryText">#8C000000</color>
     <color name="disabledText">#59000000</color>
+
+    <color name="grey_overlay">#3c313131</color>
+    <color name="grey_background">#616161</color>
 </resources>

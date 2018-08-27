@@ -2,6 +2,8 @@ package com.guardafilme.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.guardafilme.Utils
+import info.movito.themoviedbapi.model.MovieDb
 
 /**
  * Created by lucassantos on 06/08/17.
@@ -24,6 +26,17 @@ data class Movie(
             override fun newArray(size: Int): Array<Movie?> {
                 return arrayOfNulls(size)
             }
+        }
+
+        fun fromMovieDb(movieDb: MovieDb): Movie {
+            return Movie(
+                    movieDb.id,
+                    movieDb.title,
+                    movieDb.originalTitle,
+                    Utils.getYearFromMovieReleaseDate(movieDb.releaseDate),
+                    movieDb.posterPath,
+                    movieDb.backdropPath
+            )
         }
     }
 

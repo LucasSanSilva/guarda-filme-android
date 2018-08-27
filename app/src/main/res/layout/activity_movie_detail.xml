@@ -11,20 +11,34 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="top"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:expandedTitleGravity="bottom"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:expandedTitleTextAppearance="@style/ExpandedMovieTitle">
 
-            <ImageView
-                android:id="@+id/toolbar_image_view"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/toolbar_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.5"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_overlay"/>
+
+            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"/>
@@ -37,9 +51,77 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="800dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_year"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/movie_year_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_original_title"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/movie_original_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_rating"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/movie_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

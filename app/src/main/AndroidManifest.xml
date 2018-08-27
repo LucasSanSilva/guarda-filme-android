@@ -27,6 +27,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.moviedetail.MovieDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait" />
     </application>
 
