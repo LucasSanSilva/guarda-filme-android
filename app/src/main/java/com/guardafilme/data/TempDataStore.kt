@@ -14,28 +14,28 @@ class TempDataStore {
         private val WATCHED_MOVIES_REF = "watched_movies"
 
         fun addWatchedMove(movie: Movie, watchedDate: Long, rate: Float) {
-            val currentUser = FirebaseAuth.getInstance().currentUser
-
-            if (currentUser != null) {
-                val watchedRef = FirebaseDatabase
-                        .getInstance()
-                        .reference
-                        .child(WATCHED_MOVIES_REF)
-                        .child(currentUser.uid)
-                        .push()
-
-                val watchedMovie = WatchedMovie(
-                        watchedRef.key,
-                        movie.id,
-                        movie.title,
-                        movie.originalTitle,
-                        watchedDate,
-                        movie.poster,
-                        movie.backdrop,
-                        rate
-                )
-                watchedRef.setValue(watchedMovie)
-            }
+//            val currentUser = FirebaseAuth.getInstance().currentUser
+//
+//            if (currentUser != null) {
+//                val watchedRef = FirebaseDatabase
+//                        .getInstance()
+//                        .reference
+//                        .child(WATCHED_MOVIES_REF)
+//                        .child(currentUser.uid)
+//                        .push()
+//
+//                val watchedMovie = WatchedMovie(
+//                        watchedRef.key,
+//                        movie.id,
+//                        movie.title,
+//                        movie.originalTitle,
+//                        watchedDate,
+//                        movie.poster,
+//                        movie.backdrop,
+//                        rate
+//                )
+//                watchedRef.setValue(watchedMovie)
+//            }
         }
     }
 }

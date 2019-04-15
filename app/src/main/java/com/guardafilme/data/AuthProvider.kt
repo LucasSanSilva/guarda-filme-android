@@ -15,9 +15,9 @@ class AuthProvider @Inject constructor() {
         return AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(
-                        Arrays.asList(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-                                AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                        Arrays.asList(AuthUI.IdpConfig.EmailBuilder().build(),
+                                AuthUI.IdpConfig.PhoneBuilder().build(),
+                                AuthUI.IdpConfig.GoogleBuilder().build()))
                 .setLogo(R.drawable.logo)
                 .setTheme(R.style.LoginTheme)
                 .build()

@@ -41,7 +41,7 @@ class GFUserRepository @Inject constructor(): UserRepository {
                 .child(getUserId())
                 .orderByChild("watchedDate")
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot?) {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val watchedMovies = mutableListOf<WatchedMovie>()
 
                 dataSnapshot?.children?.forEach { childData ->
@@ -54,7 +54,7 @@ class GFUserRepository @Inject constructor(): UserRepository {
                 listener(watchedMovies)
             }
 
-            override fun onCancelled(error: DatabaseError?) {
+            override fun onCancelled(error: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
@@ -106,8 +106,13 @@ class GFUserRepository @Inject constructor(): UserRepository {
                     .child(currentUser.uid)
                     .push()
 
+            if (watchedRef.key.isNullOrBlank()) {
+                onComplete(false)
+                return
+            }
+
             val watchedMovie = WatchedMovie(
-                    watchedRef.key,
+                    watchedRef.key!!,
                     movie.id,
                     movie.title,
                     movie.originalTitle,

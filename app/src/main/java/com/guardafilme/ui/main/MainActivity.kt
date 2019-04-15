@@ -1,5 +1,6 @@
 package com.guardafilme.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -7,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.firebase.ui.auth.IdpResponse
-import com.firebase.ui.auth.ResultCodes
 //import com.google.android.gms.ads.MobileAds
 import com.guardafilme.R
 import com.guardafilme.data.AuthProvider
@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             val response = IdpResponse.fromResultIntent(data)
 
             // Successfully signed in
-            if (resultCode == ResultCodes.OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 presenter.loadCurrentUser()
             } else {
                 // Sign in failed
-                presenter.loginError(response?.errorCode)
+                presenter.loginError(response?.error?.errorCode)
             }
         }
     }

@@ -7,8 +7,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion ANDROID_BUILD_VERSION
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.guardafilme"
         minSdkVersion 21
@@ -36,11 +36,11 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
-    implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
-    implementation 'com.firebaseui:firebase-ui-database:3.3.1'
-    implementation "com.google.firebase:firebase-auth:15.1.0"
-    implementation "com.google.firebase:firebase-database:15.0.1"
-    implementation "com.google.android.gms:play-services-auth:15.0.1"
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
+    implementation 'com.firebaseui:firebase-ui-database:4.3.2'
+    implementation "com.google.firebase:firebase-auth:16.2.1"
+    implementation "com.google.firebase:firebase-database:16.1.0"
+    implementation "com.google.android.gms:play-services-auth:16.0.1"
 
     implementation "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     implementation "com.android.support:customtabs:$SUPPORT_LIBRARY_VERSION"
