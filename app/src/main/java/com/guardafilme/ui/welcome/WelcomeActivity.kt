@@ -3,6 +3,7 @@ package com.guardafilme.ui.welcome
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -93,6 +94,10 @@ class WelcomeActivity: AppCompatActivity(), WelcomeContract.View {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             })
+        } else if (item.itemId == R.id.privacy_policy_item) {
+            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("http://santoslucas.github.io/guardafilme.html")
+            startActivity(openURL)
         }
 
         return super.onOptionsItemSelected(item)
